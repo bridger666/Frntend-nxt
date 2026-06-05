@@ -55,34 +55,46 @@ export default function GridOverlay({ animated = false, className = '' }: GridOv
         const colCount = Math.ceil(c.width / cw);
         const rowCount = Math.ceil(c.height / ch);
 
-        for (let i = 0; i < colCount * rowCount && i < cells.length; i++) {
+        const offsetX = (c.width / 2) % cw;
+        const offsetY = (c.height / 2) % ch;
+
+        const k_center = Math.floor((c.width / 2) / cw);
+        const r_center = Math.floor((c.height / 2) / ch);
+
+        for (let i = 0; i < (colCount + 2) * (rowCount + 2) && i < cells.length; i++) {
           const cell = cells[i];
           if (cell.opacity < cell.target) {
             cell.opacity = Math.min(cell.opacity + cell.speed, cell.target);
           } else if (cell.opacity > cell.target) {
             cell.opacity = Math.max(cell.opacity - cell.speed, cell.target);
           }
-          if (cell.opacity > 0.01) {
-            const col = i % colCount;
-            const row = Math.floor(i / colCount);
+
+          const col = (i % (colCount + 2)) - 1;
+          const row = Math.floor(i / (colCount + 2)) - 1;
+          const isTargetBox = col === k_center + 4 && row === r_center + 1;
+
+          if (isTargetBox) {
+            ctx.fillStyle = 'rgba(0,0,0,0.95)';
+            ctx.fillRect(col * cw + offsetX, row * ch + offsetY, cw, ch);
+          } else if (cell.opacity > 0.01) {
             ctx.fillStyle = `rgba(0,0,0,${cell.opacity})`;
-            ctx.fillRect(col * cw, row * ch, cw, ch);
+            ctx.fillRect(col * cw + offsetX, row * ch + offsetY, cw, ch);
           }
         }
 
         // Grid lines
         ctx.strokeStyle = 'rgba(255,255,255,0.08)';
         ctx.lineWidth = 1;
-        for (let x = 0; x <= colCount; x++) {
+        for (let x = -1; x <= colCount + 1; x++) {
           ctx.beginPath();
-          ctx.moveTo(x * cw, 0);
-          ctx.lineTo(x * cw, c.height);
+          ctx.moveTo(x * cw + offsetX, 0);
+          ctx.lineTo(x * cw + offsetX, c.height);
           ctx.stroke();
         }
-        for (let y = 0; y <= rowCount; y++) {
+        for (let y = -1; y <= rowCount + 1; y++) {
           ctx.beginPath();
-          ctx.moveTo(0, y * ch);
-          ctx.lineTo(c.width, y * ch);
+          ctx.moveTo(0, y * ch + offsetY);
+          ctx.lineTo(c.width, y * ch + offsetY);
           ctx.stroke();
         }
 
@@ -90,10 +102,10 @@ export default function GridOverlay({ animated = false, className = '' }: GridOv
         ctx.strokeStyle = 'rgba(255,255,255,0.25)';
         ctx.lineWidth = 1;
         const cs = 4;
-        for (let x = 0; x <= colCount; x++) {
-          for (let y = 0; y <= rowCount; y++) {
-            const px = x * cw;
-            const py = y * ch;
+        for (let x = -1; x <= colCount + 1; x++) {
+          for (let y = -1; y <= rowCount + 1; y++) {
+            const px = x * cw + offsetX;
+            const py = y * ch + offsetY;
             ctx.beginPath();
             ctx.moveTo(px - cs, py);
             ctx.lineTo(px + cs, py);
@@ -128,29 +140,31 @@ export default function GridOverlay({ animated = false, className = '' }: GridOv
         const ch = 120;
         const colCount = Math.ceil(c.width / cw);
         const rowCount = Math.ceil(c.height / ch);
+        const offsetX = (c.width / 2) % cw;
+        const offsetY = (c.height / 2) % ch;
 
         ctx.strokeStyle = 'rgba(255,255,255,0.08)';
         ctx.lineWidth = 1;
-        for (let x = 0; x <= colCount; x++) {
+        for (let x = -1; x <= colCount + 1; x++) {
           ctx.beginPath();
-          ctx.moveTo(x * cw, 0);
-          ctx.lineTo(x * cw, c.height);
+          ctx.moveTo(x * cw + offsetX, 0);
+          ctx.lineTo(x * cw + offsetX, c.height);
           ctx.stroke();
         }
-        for (let y = 0; y <= rowCount; y++) {
+        for (let y = -1; y <= rowCount + 1; y++) {
           ctx.beginPath();
-          ctx.moveTo(0, y * ch);
-          ctx.lineTo(c.width, y * ch);
+          ctx.moveTo(0, y * ch + offsetY);
+          ctx.lineTo(c.width, y * ch + offsetY);
           ctx.stroke();
         }
 
         ctx.strokeStyle = 'rgba(255,255,255,0.25)';
         ctx.lineWidth = 1;
         const cs = 4;
-        for (let x = 0; x <= colCount; x++) {
-          for (let y = 0; y <= rowCount; y++) {
-            const px = x * cw;
-            const py = y * ch;
+        for (let x = -1; x <= colCount + 1; x++) {
+          for (let y = -1; y <= rowCount + 1; y++) {
+            const px = x * cw + offsetX;
+            const py = y * ch + offsetY;
             ctx.beginPath();
             ctx.moveTo(px - cs, py);
             ctx.lineTo(px + cs, py);

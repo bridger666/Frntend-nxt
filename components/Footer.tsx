@@ -41,7 +41,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm">
                 {productLinks.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-white/90 hover:text-[#0ae8af] transition-colors">
+                    <Link href={link.href} className="text-white/90 hover:text-[#939393] transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -55,7 +55,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm">
                 {companyLinks.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-white/90 hover:text-[#0ae8af] transition-colors">
+                    <Link href={link.href} className="text-white/90 hover:text-[#939393] transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -69,7 +69,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm">
                 {legalLinks.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-white/90 hover:text-[#0ae8af] transition-colors">
+                    <Link href={link.href} className="text-white/90 hover:text-[#939393] transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -82,7 +82,7 @@ export default function Footer() {
               <h4 className="text-gray-500 text-sm font-normal mb-4">Get in touch</h4>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <a href="mailto:hello@aivory.uk" className="text-white/90 hover:text-[#0ae8af] transition-colors">
+                  <a href="mailto:hello@aivory.uk" className="text-white/90 hover:text-[#939393] transition-colors">
                     hello@aivory.uk
                   </a>
                 </li>

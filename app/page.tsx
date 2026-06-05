@@ -17,13 +17,18 @@ export default function HomePage() {
       <section style={{ padding: 0 }} className="relative z-[1]">
         <Navbar />
         <HeroSection />
-        <AIReadySection />
-        <FeatureCards />
-        <StatsSection />
-        <PricingStepOne />
-        <PricingStepTwo />
-        <PrivacySection />
-        <PreFooterCTA />
+        
+        {/* Scaled down content (85%) */}
+        <div style={{ zoom: 0.85 }}>
+          <AIReadySection />
+          <FeatureCards />
+          <StatsSection />
+          <PricingStepOne />
+          <PricingStepTwo />
+          <PrivacySection />
+          <PreFooterCTA />
+        </div>
+        
         <Footer />
       </section>
     </main>

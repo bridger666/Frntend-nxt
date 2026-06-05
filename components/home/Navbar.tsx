@@ -2,8 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/components/context/LanguageContext';
 
 export default function Navbar() {
+  const { language, setLanguage } = useLanguage();
+
   return (
     <nav className="absolute top-0 left-0 right-0 z-[1000]" style={{ background: 'transparent' }}>
       <div className="max-w-[1400px] mx-auto flex justify-between items-center" style={{ padding: '1.5rem 2rem' }}>
@@ -19,8 +22,15 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Right: Auth actions */}
+        {/* Right: Auth actions & Language Toggle */}
         <div className="flex items-center gap-7">
+          <button
+            onClick={() => setLanguage(language === 'en' ? 'id' : 'en')}
+            className="text-white/60 hover:text-white font-normal uppercase tracking-normal transition-all duration-200"
+            style={{ fontFamily: "'Manrope', sans-serif", fontSize: '10px' }}
+          >
+            {language === 'en' ? 'EN' : 'ID'}
+          </button>
           <a
             href="#"
             className="text-white font-normal uppercase tracking-normal no-underline hover:underline transition-all duration-200"

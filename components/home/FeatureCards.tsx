@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useGsapStackCards } from '@/hooks/useGsapStackCards';
 
@@ -192,126 +192,223 @@ function RoadmapVisual() {
 }
 
 function WorkflowVisual() {
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setKey(prev => prev + 1);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="flex items-center gap-4">
-      {/* Prompt input */}
-      <div
-        className="flex items-center gap-1 whitespace-nowrap"
-        style={{
-          border: '1px solid rgba(255,255,255,0.12)',
-          padding: '8px 14px',
-          background: 'rgba(255,255,255,0.06)',
-          width: '178px',
-        }}
-      >
-        <span
-          className="wf-prompt-text"
-          style={{
-            fontSize: '11px',
-            color: 'rgba(255,255,255,0.6)',
-            fontFamily: "'Manrope', sans-serif",
-          }}
-        >
-          Automate lead follow-up
-        </span>
-        <span
-          className="wf-cursor"
-          style={{
-            display: 'inline-block',
-            width: '2px',
-            height: '13px',
-            background: '#0ae8af',
-          }}
-        />
+    <div key={key} className="w-full flex flex-col gap-3 h-full justify-center max-w-[346px]">
+      {/* Chat Prompt for Workflow */}
+      <div className="bg-[#111111] border border-white/5 rounded-[13px] p-3 flex gap-3 items-center shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <div className="w-8 h-8 rounded-full bg-[#1e1e1e] flex-shrink-0 flex items-center justify-center text-xs font-medium text-white/80 border border-white/5 shadow-sm">U</div>
+        <div className="text-white/90 text-xs flex-1 font-light leading-relaxed">
+          Create an automation workflow to extract email leads and send them to Slack.
+        </div>
+        <div className="w-5 h-5 rounded-full border-[1.5px] border-white/10 border-t-[#939393] flex-shrink-0 animate-spin opacity-0" style={{ animation: 'fade-in 0.1s ease-out 0.8s forwards, spin 1s linear infinite, fade-out 0.2s ease-in 2.5s forwards' }} />
       </div>
-      {/* Arrow */}
-      <svg width="24" height="12" viewBox="0 0 24 12" fill="none" className="wf-arrow">
-        <path d="M0 6h20M16 2l4 4-4 4" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-      </svg>
-      {/* Flow nodes */}
-      <div className="flex flex-col gap-[5px]">
-        {['Trigger', 'Send Email', 'Wait 2 days', 'Log to CRM'].map((label, i) => (
-          <div
-            key={label}
-            className="wf-node flex items-center gap-[6px]"
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.12)',
-              padding: '5px 10px',
-              fontSize: '10px',
-              color: 'rgba(255,255,255,0.6)',
-              fontFamily: "'Manrope', sans-serif",
-              fontWeight: 300,
-              animationDelay: `${i * 0.4}s`,
-            }}
-          >
-            <span className="inline-block w-[6px] h-[6px] bg-accent" />
-            {label}
+
+      {/* Generated Flow */}
+      <div className="w-full bg-[#111111] border border-white/5 rounded-[13px] p-5 flex flex-col gap-5 relative overflow-hidden shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '2.5s' }}>
+        <div className="absolute inset-0 bg-[#939393]/5 opacity-0" style={{ animation: 'fade-in 1s ease-out 3s forwards, pulse 3s ease-in-out infinite alternate 4s' }} />
+        <div className="text-[9px] text-white/40 uppercase tracking-widest text-center font-light z-10" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+          Workflow Generated
+        </div>
+
+        <div className="flex items-center justify-between w-full max-w-[288px] mx-auto z-10 relative">
+          {/* Connecting Lines */}
+          <div className="absolute top-1/2 left-[15%] right-[15%] h-[1px] bg-white/5 -translate-y-1/2 -z-10" />
+          <div className="absolute top-1/2 left-[15%] right-[50%] h-[2px] bg-[#939393] -translate-y-1/2 -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '3.2s' }} />
+          <div className="absolute top-1/2 left-[50%] right-[15%] h-[2px] bg-[#939393] -translate-y-1/2 -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '4.0s' }} />
+
+          {/* Node 1: Trigger */}
+          <div className="px-4 py-3 bg-[#080808] border border-white/10 rounded-lg font-light text-white flex flex-col items-center shadow-lg min-w-[72px] opacity-0 animate-fade-in-up" style={{ animationDelay: '2.8s' }}>
+            <span className="text-[8px] text-white/40 uppercase mb-1 tracking-wider">Trigger</span>
+            <span className="font-medium text-xs">Email</span>
           </div>
-        ))}
+          
+          {/* Node 2: Agent */}
+          <div className="px-4 py-3 bg-[#080808] border border-[#939393]/40 rounded-lg font-light text-white flex flex-col items-center relative min-w-[72px] opacity-0 animate-fade-in-up" style={{ animationDelay: '3.6s' }}>
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#939393] animate-ping opacity-80" />
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#939393]" />
+            <span className="text-[8px] text-[#939393] uppercase font-medium mb-1 tracking-wider">AI Agent</span>
+            <span className="font-medium text-xs text-[#939393]">Extract</span>
+          </div>
+
+          {/* Node 3: Action */}
+          <div className="px-4 py-3 bg-[#080808] border border-white/10 rounded-lg font-light text-white flex flex-col items-center shadow-lg min-w-[72px] opacity-0 animate-fade-in-up" style={{ animationDelay: '4.4s' }}>
+            <span className="text-[8px] text-white/40 uppercase mb-1 tracking-wider">Action</span>
+            <span className="font-medium text-xs">Slack</span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 function AgentVisual() {
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhase(p => (p + 1) % 3);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const platforms = [
+    {
+      name: 'Slack',
+      icon: '/integrations/icons/slack.svg',
+      bg: '#1a1a2e',
+      headerBg: '#2D2D3F',
+      channel: '#sales-leads',
+      messages: [
+        { from: 'user', text: 'New lead from contact form — urgent' },
+        { from: 'agent', text: 'Lead triaged. Priority: High. CRM updated, Slack alert sent to sales team.' },
+      ],
+    },
+    {
+      name: 'WhatsApp',
+      icon: '/integrations/icons/whatsapp.svg',
+      bg: '#0b141a',
+      headerBg: '#1F2C33',
+      channel: 'Customer Support',
+      messages: [
+        { from: 'user', text: 'Hi, I need help with my order #4821' },
+        { from: 'agent', text: 'Order #4821 found. Status: shipped. ETA: Tomorrow. Tracking link sent.' },
+      ],
+    },
+    {
+      name: 'Telegram',
+      icon: '/integrations/icons/telegram.svg',
+      bg: '#17212b',
+      headerBg: '#242F3D',
+      channel: 'Ops Notifications',
+      messages: [
+        { from: 'user', text: 'Schedule a follow-up with prospect ABC Corp' },
+        { from: 'agent', text: 'Follow-up scheduled for tomorrow 2PM. Calendar invite sent. Email draft ready.' },
+      ],
+    },
+  ];
+
+  const current = platforms[phase];
+
   return (
-    <svg width="280" height="130" viewBox="0 0 280 130" fill="none">
-      {/* Center: Agent hub */}
-      <rect className="agent-hub-rect" x="100" y="40" width="80" height="50" rx="6" fill="#111" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-      <text x="140" y="60" fontSize="10" fill="rgba(255,255,255,0.9)" fontFamily="Manrope,sans-serif" fontWeight="300" textAnchor="middle">AI AGENT</text>
-      <text x="140" y="76" fontSize="8" fill="rgba(255,255,255,0.5)" fontFamily="Manrope,sans-serif" fontWeight="300" textAnchor="middle">Email · Sales · CS</text>
-      {/* Gmail icon - dark rounded box */}
-      <rect x="16" y="16" width="44" height="34" rx="8" fill="#1a1a1a" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
-      <svg x="26" y="21" width="24" height="24" viewBox="0 0 32 32" fill="none">
-        <path d="M2 11.9556C2 8.47078 2 6.7284 2.67818 5.39739C3.27473 4.22661 4.22661 3.27473 5.39739 2.67818C6.7284 2 8.47078 2 11.9556 2H20.0444C23.5292 2 25.2716 2 26.6026 2.67818C27.7734 3.27473 28.7253 4.22661 29.3218 5.39739C30 6.7284 30 8.47078 30 11.9556V20.0444C30 23.5292 30 25.2716 29.3218 26.6026C28.7253 27.7734 27.7734 28.7253 26.6026 29.3218C25.2716 30 23.5292 30 20.0444 30H11.9556C8.47078 30 6.7284 30 5.39739 29.3218C4.22661 28.7253 3.27473 27.7734 2.67818 26.6026C2 25.2716 2 23.5292 2 20.0444V11.9556Z" fill="white" />
-        <path d="M22.0515 8.52295L16.0644 13.1954L9.94043 8.52295V8.52421L9.94783 8.53053V15.0732L15.9954 19.8466L22.0515 15.2575V8.52295Z" fill="#EA4335" />
-        <path d="M23.6231 7.38639L22.0508 8.52292V15.2575L26.9983 11.459V9.17074C26.9983 9.17074 26.3978 5.90258 23.6231 7.38639Z" fill="#FBBC05" />
-        <path d="M22.0508 15.2575V23.9924H25.8428C25.8428 23.9924 26.9219 23.8813 26.9995 22.6513V11.459L22.0508 15.2575Z" fill="#34A853" />
-        <path d="M9.94811 24.0001V15.0732L9.94043 15.0669L9.94811 24.0001Z" fill="#C5221F" />
-        <path d="M9.94014 8.52404L8.37646 7.39382C5.60179 5.91001 5 9.17692 5 9.17692V11.4651L9.94014 15.0667V8.52404Z" fill="#C5221F" />
-        <path d="M9.94043 8.52441V15.0671L9.94811 15.0734V8.53073L9.94043 8.52441Z" fill="#C5221F" />
-        <path d="M5 11.4668V22.6591C5.07646 23.8904 6.15673 24.0003 6.15673 24.0003H9.94877L9.94014 15.0671L5 11.4668Z" fill="#4285F4" />
-      </svg>
-      {/* Slack icon - dark rounded box */}
-      <rect x="16" y="80" width="44" height="34" rx="8" fill="#1a1a1a" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
-      <svg x="29" y="88" width="18" height="18" viewBox="0 0 16 16">
-        <path fill="#E01E5A" d="M2.471 11.318a1.474 1.474 0 001.47-1.471v-1.47h-1.47A1.474 1.474 0 001 9.846c.001.811.659 1.469 1.47 1.47zm3.682-2.942a1.474 1.474 0 00-1.47 1.471v3.683c.002.811.66 1.468 1.47 1.47a1.474 1.474 0 001.47-1.47V9.846a1.474 1.474 0 00-1.47-1.47z" />
-        <path fill="#36C5F0" d="M4.683 2.471c.001.811.659 1.469 1.47 1.47h1.47v-1.47A1.474 1.474 0 006.154 1a1.474 1.474 0 00-1.47 1.47zm2.94 3.682a1.474 1.474 0 00-1.47-1.47H2.47A1.474 1.474 0 001 6.153c.002.812.66 1.469 1.47 1.47h3.684a1.474 1.474 0 001.47-1.47z" />
-        <path fill="#2EB67D" d="M9.847 7.624a1.474 1.474 0 001.47-1.47V2.47A1.474 1.474 0 009.848 1a1.474 1.474 0 00-1.47 1.47v3.684c.002.81.659 1.468 1.47 1.47zm3.682-2.941a1.474 1.474 0 00-1.47 1.47v1.47h1.47A1.474 1.474 0 0015 6.154a1.474 1.474 0 00-1.47-1.47z" />
-        <path fill="#ECB22E" d="M8.377 9.847c.002.811.659 1.469 1.47 1.47h3.683A1.474 1.474 0 0015 9.848a1.474 1.474 0 00-1.47-1.47H9.847a1.474 1.474 0 00-1.47 1.47zm2.94 3.682a1.474 1.474 0 00-1.47-1.47h-1.47v1.47c.002.812.659 1.469 1.47 1.47a1.474 1.474 0 001.47-1.47z" />
-      </svg>
-      {/* Telegram icon - dark rounded box */}
-      <rect x="220" y="16" width="44" height="34" rx="8" fill="#1a1a1a" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
-      <svg x="231" y="22" width="22" height="22" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="14" fill="#229ED9" />
-        <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="#FFF" />
-      </svg>
-      {/* HubSpot icon - dark rounded box */}
-      <rect x="220" y="80" width="44" height="34" rx="8" fill="#1a1a1a" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" />
-      <svg x="230" y="86" width="24" height="24" viewBox="0 0 1024 1024">
-        <circle cx="512" cy="512" r="512" fill="#ff7a59" />
-        <path d="M623.8 624.94c-38.23 0-69.24-30.67-69.24-68.51s31-68.52 69.24-68.52 69.26 30.67 69.26 68.52-31 68.51-69.26 68.51m20.74-200.42v-61a46.83 46.83 0 0 0 27.33-42.29v-1.41c0-25.78-21.32-46.86-47.35-46.86h-1.43c-26 0-47.35 21.09-47.35 46.86v1.41a46.85 46.85 0 0 0 27.33 42.29v61a135.08 135.08 0 0 0-63.86 27.79l-169.1-130.17A52.49 52.49 0 0 0 372 309c0-29.21-23.89-52.92-53.4-53s-53.45 23.59-53.48 52.81 23.85 52.88 53.36 52.93a53.29 53.29 0 0 0 26.33-7.09l166.38 128.1a132.14 132.14 0 0 0 2.07 150.3l-50.62 50.1A43.42 43.42 0 1 0 450.1 768c24.24 0 43.9-19.46 43.9-43.45a42.24 42.24 0 0 0-2-12.42l50-49.52a135.28 135.28 0 0 0 81.8 27.47c74.61 0 135.06-59.83 135.06-133.65 0-66.82-49.62-122-114.33-131.91" fill="#FFF" fillRule="evenodd" />
-      </svg>
-      {/* Connector lines (base layer) */}
-      <path d="M60 33 C78 33 84 48 100 52" stroke="rgba(255,255,255,0.12)" strokeWidth="1" fill="none" />
-      <path d="M60 97 C78 97 84 82 100 78" stroke="rgba(255,255,255,0.12)" strokeWidth="1" fill="none" />
-      <path d="M180 52 C196 48 202 33 220 33" stroke="rgba(255,255,255,0.12)" strokeWidth="1" fill="none" />
-      <path d="M180 78 C196 82 202 97 220 97" stroke="rgba(255,255,255,0.12)" strokeWidth="1" fill="none" />
-      {/* Teal pulse on lines */}
-      <path d="M60 33 C78 33 84 48 100 52" stroke="#0ae8af" strokeWidth="1" fill="none" strokeLinecap="round" strokeDasharray="18 150" opacity="0.85">
-        <animate attributeName="stroke-dashoffset" from="168" to="0" dur="2s" repeatCount="indefinite" />
-      </path>
-      <path d="M60 97 C78 97 84 82 100 78" stroke="#0ae8af" strokeWidth="1" fill="none" strokeLinecap="round" strokeDasharray="18 150" opacity="0.85">
-        <animate attributeName="stroke-dashoffset" from="168" to="0" dur="2s" repeatCount="indefinite" begin="0.3s" />
-      </path>
-      <path d="M180 52 C196 48 202 33 220 33" stroke="#0ae8af" strokeWidth="1" fill="none" strokeLinecap="round" strokeDasharray="18 150" opacity="0.85">
-        <animate attributeName="stroke-dashoffset" from="168" to="0" dur="2s" repeatCount="indefinite" begin="1.2s" />
-      </path>
-      <path d="M180 78 C196 82 202 97 220 97" stroke="#0ae8af" strokeWidth="1" fill="none" strokeLinecap="round" strokeDasharray="18 150" opacity="0.85">
-        <animate attributeName="stroke-dashoffset" from="168" to="0" dur="2s" repeatCount="indefinite" begin="1.5s" />
-      </path>
-    </svg>
+    <div style={{ width: '100%', maxWidth: '367px' }}>
+      <div
+        style={{
+          borderRadius: '16px',
+          overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.06)',
+          transition: 'all 0.7s ease',
+        }}
+      >
+        {/* Platform Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '14px',
+            padding: '14px 19px',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            backgroundColor: current.headerBg,
+            transition: 'background-color 0.7s ease',
+          }}
+        >
+          <div
+            style={{
+              width: '27px',
+              height: '27px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              background: 'rgba(255,255,255,0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={current.icon} alt={current.name} width={19} height={19} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize: '15px', color: 'rgba(255,255,255,0.9)', fontWeight: 500, fontFamily: "'Manrope', sans-serif" }}>{current.name}</span>
+            <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', fontFamily: "'Manrope', sans-serif" }}>{current.channel}</span>
+          </div>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '7px' }}>
+            {platforms.map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  width: i === phase ? '19px' : '7px',
+                  height: '7px',
+                  borderRadius: '4px',
+                  backgroundColor: i === phase ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.2)',
+                  transition: 'all 0.5s ease',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Chat Area */}
+        <div
+          key={phase}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '14px',
+            padding: '19px',
+            backgroundColor: current.bg,
+            transition: 'background-color 0.7s ease',
+            minHeight: '149px',
+          }}
+        >
+          {current.messages.map((msg, i) => (
+            <div
+              key={`${phase}-${i}`}
+              className="opacity-0 animate-fade-in-up"
+              style={{
+                display: 'flex',
+                justifyContent: msg.from === 'user' ? 'flex-end' : 'flex-start',
+                animationDelay: `${i * 0.6 + 0.3}s`,
+                animationFillMode: 'forwards',
+              }}
+            >
+              <div
+                style={{
+                  maxWidth: '85%',
+                  padding: '11px 16px',
+                  borderRadius: msg.from === 'user' ? '16px 16px 5px 16px' : '16px 16px 16px 5px',
+                  fontSize: '15px',
+                  lineHeight: '1.5',
+                  fontFamily: "'Manrope', sans-serif",
+                  fontWeight: 300,
+                  color: msg.from === 'user' ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.7)',
+                  background: msg.from === 'user' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)',
+                  border: msg.from === 'agent' ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                }}
+              >
+                {msg.from === 'agent' && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '5px' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Aivory Agent</span>
+                  </div>
+                )}
+                {msg.text}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -331,11 +428,11 @@ function TemplatesVisual() {
       <div
         style={{
           position: 'absolute',
-          top: '-12px',
+          top: '-24px',
           right: '0',
-          color: '#0ae8af',
-          fontSize: '14px',
-          fontWeight: 500,
+          color: '#afafaf',
+          fontSize: '28px',
+          fontWeight: 300,
           fontFamily: "'Manrope', sans-serif",
         }}
       >
@@ -385,58 +482,112 @@ function TemplatesVisual() {
 }
 
 function ConsoleVisual() {
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAnimKey(prev => prev + 1);
+    }, 6000); // Loops perfectly after the 5.1s animations finish
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="console-chat-container" style={{ width: '100%', maxWidth: '240px', position: 'relative', padding: '0' }}>
-      {/* Top gradient fade */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '24px',
-          background: 'linear-gradient(to bottom, #191919 0%, transparent 100%)',
-          zIndex: 2,
-          pointerEvents: 'none',
-          borderRadius: '8px 8px 0 0',
-        }}
-      />
-      {/* Chat messages */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '20px 10px 10px' }}>
-        <div className="chat-b chat-user" style={{ animationName: 'msg1' }}>
-          What&apos;s our current AI Readiness Score?
+    <div key={animKey} className="w-full flex items-center justify-center p-2 relative overflow-hidden h-full" style={{ minHeight: '320px' }}>
+      <div style={{ transform: 'scale(0.85)', transformOrigin: 'top center', width: '460px', marginTop: '10px' }} className="flex flex-col gap-4 font-light">
+        {/* User Message - Right Aligned */}
+        <div className="flex justify-end opacity-0 animate-fade-in-up" style={{ animationDelay: '3.3s', animationFillMode: 'forwards' }}>
+          <div className="bg-[#2A2A2A] border border-white/5 rounded-2xl px-5 py-3.5 text-white/90 text-[13px] sm:text-sm leading-relaxed shadow-sm max-w-[85%]">
+            Can you analyze my current lead generation process?
+          </div>
         </div>
-        <div className="chat-b chat-ai" style={{ animationName: 'msg2' }}>
-          Your overall readiness score is 33. The main bottleneck is data documentation in sales.
+        
+        {/* Grok-style Agents Thinking */}
+        <div className="flex flex-col gap-4 mt-2 opacity-0 animate-fade-in-up" style={{ animationDelay: '4.0s', animationFillMode: 'forwards' }}>
+          
+          {/* Header: Circles + Text */}
+          <div className="flex items-center gap-3">
+            <div className="flex -space-x-2">
+              <div className="w-5 h-5 rounded-full bg-[#556B2F] border-2 border-[#181818] relative z-30" />
+              <div className="w-5 h-5 rounded-full bg-[#6B8E23] border-2 border-[#181818] relative z-20" />
+              <div className="w-5 h-5 rounded-full bg-[#9ACD32] border-2 border-[#181818] relative z-10" />
+            </div>
+            <div className="px-2 py-0.5 rounded-full bg-white/10 text-white/70 text-[10px] font-medium tracking-wider">
+              +12
+            </div>
+            <div className="text-white/80 text-sm font-medium flex items-center gap-2">
+              Agents analyzing <span className="text-white/40">·</span> <span className="text-white/40">5s</span>
+            </div>
+          </div>
+
+          {/* Search Results List */}
+          <div className="flex flex-col gap-4 pl-1">
+            {[
+              { source: 'Queried CRM', query: 'lead response time operations data', results: '520 records', avatars: ['C', 'D'] },
+              { source: 'Analyzed Logs', query: 'email triage flow delay analysis', results: '12 bottlenecks', avatars: ['E', 'T'] },
+              { source: 'Computed Metric', query: 'sales team average response time', results: 'Avg >24h', avatars: ['M', 'R'] },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col gap-1.5 opacity-0 animate-fade-in-up" style={{ animationDelay: `${4.5 + i * 0.3}s`, animationFillMode: 'forwards' }}>
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2 text-white/40 text-xs">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <span>{item.source}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/40 text-[11px]">
+                    <span>{item.results}</span>
+                    <div className="flex -space-x-1">
+                      {item.avatars.map((av, avIdx) => (
+                        <div key={avIdx} className="w-4 h-4 rounded-full bg-[#2F5BEA] border border-[#181818] flex items-center justify-center text-[8px] text-white font-bold relative z-10">
+                          {av}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="pl-5 font-mono text-[11px] sm:text-xs text-white/70">
+                  {item.query}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="chat-b chat-user" style={{ animationName: 'msg3' }}>
-          Can we generate the AI System Blueprint based on this?
+
+        {/* Bottom Search Bar */}
+        <div className="w-full mt-4 bg-[#1D1D1D] border border-white/5 rounded-full px-4 py-3 flex items-center justify-between shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
+          <div className="flex items-center gap-3 text-white/40 flex-1 h-5 overflow-hidden">
+            <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+            </svg>
+            
+            <div className="relative flex-1 h-full flex items-center text-sm">
+              {/* Placeholder */}
+              <div className="absolute inset-0 flex items-center text-white/40" style={{ animation: 'fade-out 0.1s forwards 0.8s, fade-in 0.1s forwards 5.8s' }}>
+                What do you want to know?
+              </div>
+              
+              {/* Typed text */}
+              <div className="absolute left-0 top-0 bottom-0 flex items-center text-white/90 opacity-0 max-w-0 overflow-hidden whitespace-nowrap border-r-[2px] border-white pr-1" style={{ animation: 'fade-in 0.1s forwards 0.9s, type-text 1.5s steps(40, end) forwards 1.0s, fade-out 0.1s forwards 3.0s' }}>
+                Can you analyze my current lead generation process?
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 text-white/40 text-sm hover:text-white/70 cursor-pointer transition-colors">
+              <span>Search</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <svg className="w-4 h-4 text-white/40 hover:text-white/70 cursor-pointer transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+            <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center cursor-pointer hover:bg-white/90 transition-colors">
+              <div className="w-2.5 h-2.5 bg-black rounded-[2px]" />
+            </div>
+          </div>
         </div>
-        <div className="chat-b chat-ai" style={{ animationName: 'msg4' }}>
-          Yes. The blueprint recommends a 3-phase roadmap prioritizing sales workflow automation.
-        </div>
-        <div className="chat-b chat-user" style={{ animationName: 'msg5' }}>
-          Deploy Phase 1 agents to staging.
-        </div>
-        <div className="chat-b chat-ai" style={{ animationName: 'msg6' }}>
-          Phase 1 deployed. 5 agents are now active in the staging environment.
-        </div>
-      </div>
-      {/* Bottom bar */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '8px 10px',
-          color: '#777',
-          fontSize: '11px',
-          fontFamily: "'Manrope', sans-serif",
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-        }}
-      >
-        <span>Chat</span>
-        <span>Explore →</span>
+
       </div>
     </div>
   );

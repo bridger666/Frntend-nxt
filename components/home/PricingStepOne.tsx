@@ -2,6 +2,8 @@
 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
+import { useLanguage } from '@/components/context/LanguageContext';
+
 /* ─── Arrow Icon (reused) ─── */
 function ArrowUpRight({ className = '' }: { className?: string }) {
   return (
@@ -37,7 +39,7 @@ function StepIcon() {
 interface PricingCard {
   title: string;
   subtitle?: string;
-  price: string;
+  price: number;
   frequency: string;
   description: string;
   features: string[];
@@ -48,7 +50,7 @@ interface PricingCard {
 const cards: PricingCard[] = [
   {
     title: 'AI Readiness\nDeep Diagnostic',
-    price: '$29',
+    price: 29,
     frequency: 'One time',
     description: 'Know exactly where your business stands on AI before you build anything.',
     features: [
@@ -62,7 +64,7 @@ const cards: PricingCard[] = [
   },
   {
     title: 'AI System\nBlueprint + Roadmap',
-    price: '$85',
+    price: 85,
     frequency: 'One time',
     description: 'Your full AI architecture and execution plan, built around your business, not a template.',
     features: [
@@ -78,7 +80,7 @@ const cards: PricingCard[] = [
   {
     title: 'Full Stack Bundle',
     subtitle: 'Deep Diagnostic + Blueprint + Roadmap',
-    price: '$99',
+    price: 99,
     frequency: 'One time',
     description: 'Everything in one. Know, plan, execute in order.',
     features: ['• Deep Diagnostic', '• Blueprint', '• Roadmap'],
@@ -89,6 +91,7 @@ const cards: PricingCard[] = [
 
 export default function PricingStepOne() {
   const { ref, isVisible } = useScrollAnimation();
+  const { formatPrice, language } = useLanguage();
 
   return (
     <section ref={ref} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} w-full bg-[#dfe4e5] text-[#494949] py-24 font-sans`}>
@@ -127,7 +130,7 @@ export default function PricingStepOne() {
               {/* Price row */}
               <div className="flex items-center justify-between gap-3 border-t border-[#b0b5b4] border-b border-b-[#b0b5b4] py-8 sm:gap-6">
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <span className="text-[42px] sm:text-[48px] md:text-[52px] font-extrabold leading-none">{card.price}</span>
+                  <span className={`${language === 'id' ? 'text-[35px] sm:text-[40px] md:text-[43px]' : 'text-[42px] sm:text-[48px] md:text-[52px]'} font-extrabold leading-none whitespace-nowrap`}>{formatPrice(card.price)}</span>
                   <span className="pt-2 text-[15px] sm:text-[16px] md:text-[18px] font-bold leading-none text-[#8a8f8e]">{card.frequency}</span>
                 </div>
                 <ArrowUpRight className="h-10 w-10 shrink-0 text-[#0ae8af] md:h-12 md:w-12" />

@@ -8,82 +8,79 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ title, subtitle }: HeroSectionProps) {
-  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.05 });
 
   return (
     <section
       ref={ref}
-      className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} relative min-h-screen flex items-center justify-center overflow-hidden`}
-      style={{ background: '#030408' }}
+      className={`animate-on-scroll ${
+        isVisible ? 'is-visible' : ''
+      } relative min-h-screen flex items-center justify-center overflow-hidden bg-black bg-grid-pattern border-b border-white/10`}
     >
-      {/* Subtle radial gradient overlay */}
+      {/* Light gradient highlight to mimic x.ai top screen shine */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none opacity-20 blur-[100px]"
         style={{
-          background:
-            'radial-gradient(ellipse 80% 50% at 50% 40%, rgba(10,232,175,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 50% 50% at 50% 0%, #0ae8af 0%, transparent 80%)',
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <p className="text-accent uppercase tracking-widest text-xs md:text-sm font-medium mb-6">
-          AI-Powered Solutions
-        </p>
+      {/* Hero Content */}
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
+        {/* Monospaced Top Badge */}
+        <div
+          className="inline-flex items-center gap-2 px-3.5 py-1 border border-white/15 bg-white/5 rounded-full mb-8"
+          style={{ fontFamily: "'Doto', 'Courier New', monospace" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+          <span className="text-[10px] tracking-[0.2em] text-white/80 uppercase font-light">
+            Aivory Suite | Architecture to Production
+          </span>
+        </div>
+
+        {/* Headline */}
         <h1
-          className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-6 leading-[1.15] tracking-tight max-w-3xl"
           style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           {title}
         </h1>
+
+        {/* Subtitle */}
         <p
-          className="text-lg text-white/70 max-w-2xl mx-auto mb-8 font-light leading-relaxed"
+          className="text-base sm:text-lg text-white/60 max-w-2xl mx-auto mb-10 font-light leading-relaxed"
           style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           {subtitle}
         </p>
-        
-        {/* Arrow Icon - matches landing page hero */}
-        <a
-          href="#featured"
-          className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/60 bg-black/60 hover:bg-white hover:text-black hover:border-white"
-          style={{
-            padding: '0.75rem 1.5rem',
-            fontFamily: "'Manrope', sans-serif",
-            fontWeight: 400,
-            fontSize: '0.75rem',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-          }}
-        >
-          <svg
-            className="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
+          <a
+            href="#showcase"
+            className="w-full sm:w-auto inline-flex justify-center items-center px-8 py-3.5 rounded-none bg-white text-black font-medium text-sm transition-all duration-200 hover:bg-white/90 active:scale-98"
           >
-            <path d="M17 7v10H7" />
-            <path d="M7 7l10 10" />
-          </svg>
-        </a>
+            Start Free Diagnostic
+          </a>
+          <a
+            href="#pricing"
+            className="w-full sm:w-auto inline-flex justify-center items-center px-8 py-3.5 rounded-none border border-white/25 text-white font-light text-sm transition-all duration-200 hover:bg-white/10 hover:border-white/40 active:scale-98"
+          >
+            Consultation Blueprint
+          </a>
+        </div>
       </div>
 
-      {/* Scroll-down arrow */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          className="text-white/40"
+      {/* Wireframe Scroll Guide (Vertical line showing page flow) */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <div className="w-[1px] h-20 bg-gradient-to-b from-transparent to-white/15" />
+        <div
+          className="text-[9px] tracking-[0.15em] text-white/30 uppercase my-3 font-light"
+          style={{ fontFamily: "'Doto', 'Courier New', monospace" }}
         >
-          <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+          SCROLL TO EXPLORE
+        </div>
+        <div className="w-[1px] h-12 bg-white/20" />
       </div>
     </section>
   );

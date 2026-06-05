@@ -52,7 +52,7 @@ export default function HeroSection() {
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ willChange: 'transform' }}
       >
-        <source src="/hero-video/Hero_Video.mp4" type="video/mp4" />
+        <source src="/hero-video/Hero%20Aivory%20black%20sphere%20optimized.mp4" type="video/mp4" />
       </video>
 
       {/* Grid Overlay with random fade (hero only) */}
@@ -113,6 +113,17 @@ export default function HeroSection() {
           </svg>
           START WITH FREE DIAGNOSTIC
         </a>
+      </div>
+
+      {/* Scroll to Explore Indicator */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none opacity-0 animate-fade-in" style={{ animationDelay: '1.5s', animationFillMode: 'forwards' }}>
+        <div className="flex flex-col items-center animate-pulse" style={{ animationDuration: '3s' }}>
+          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent to-white/80" />
+          <span className="text-[10px] text-white/90 tracking-[0.35em] font-light uppercase my-4" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+            SCROLL TO EXPLORE
+          </span>
+          <div className="w-[1px] h-16 bg-gradient-to-t from-transparent to-white/80" />
+        </div>
       </div>
     </div>
   );

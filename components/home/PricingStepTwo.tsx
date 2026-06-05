@@ -2,6 +2,8 @@
 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
+import { useLanguage } from '@/components/context/LanguageContext';
+
 /* ─── Icons ─── */
 function ArrowUpRight({ className = '' }: { className?: string }) {
   return (
@@ -37,7 +39,7 @@ function StepIcon() {
 interface Plan {
   name: string;
   description: string;
-  price: string;
+  price: number;
   frequency: string;
   features: string[];
   cta: string;
@@ -47,7 +49,7 @@ const plans: Plan[] = [
   {
     name: 'Foundation',
     description: 'For individuals and solo professionals starting their AI journey.',
-    price: '$20',
+    price: 20,
     frequency: '(month)',
     features: [
       '50 IC/month',
@@ -63,7 +65,7 @@ const plans: Plan[] = [
   {
     name: 'Pro',
     description: 'For SMEs and founders running AI operations daily.',
-    price: '$44',
+    price: 44,
     frequency: '(month)',
     features: [
       '300 IC/month',
@@ -80,7 +82,7 @@ const plans: Plan[] = [
   {
     name: 'Enterprise',
     description: 'For SMEs and founders running AI operations daily.',
-    price: '$499',
+    price: 499,
     frequency: '(month)',
     features: [
       '2,000 IC/month',
@@ -99,6 +101,7 @@ const plans: Plan[] = [
 
 export default function PricingStepTwo() {
   const { ref, isVisible } = useScrollAnimation();
+  const { formatPrice, language } = useLanguage();
 
   return (
     <section ref={ref} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} w-full bg-[#dfe4e5] text-[#494949] py-24 font-sans`}>
@@ -135,7 +138,7 @@ export default function PricingStepTwo() {
               {/* Price */}
               <div className="flex items-center justify-between gap-3 border-t border-[#b0b5b4] border-b border-b-[#b0b5b4] py-8 sm:gap-6">
                 <div className="flex items-start gap-2 sm:gap-3">
-                  <span className="text-[42px] sm:text-[48px] md:text-[52px] font-extrabold leading-none">{plan.price}</span>
+                  <span className={`${language === 'id' ? 'text-[35px] sm:text-[40px] md:text-[43px]' : 'text-[42px] sm:text-[48px] md:text-[52px]'} font-extrabold leading-none whitespace-nowrap`}>{formatPrice(plan.price)}</span>
                   <span className="pt-3 text-[14px] sm:text-[15px] md:text-[16px] font-bold leading-none text-[#7b7f7f]">{plan.frequency}</span>
                 </div>
                 <ArrowUpRight className="h-10 w-10 shrink-0 text-[#0ae8af] md:h-12 md:w-12" />

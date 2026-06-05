@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import html2canvas from 'html2canvas';
 
 // ============================================================================
 // TYPES
@@ -299,6 +298,7 @@ export default function FreeDiagnosticPage() {
   const downloadDiagnosticCards = useCallback(async () => {
     setDownloading(true);
     try {
+      const html2canvas = (await import('html2canvas')).default;
       const slides = [
         { ref: slide1Ref, suffix: 'Card_1' },
         { ref: slide2Ref, suffix: 'Card_2' },

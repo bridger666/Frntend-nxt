@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     'From diagnostic to deployment — everything you need to integrate AI into your business operations.',
 };
 
+import { LanguageProvider } from '@/components/context/LanguageContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -28,7 +30,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-white font-manrope antialiased" style={{ fontFamily: 'var(--font-manrope), Manrope, sans-serif' }}>
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
