@@ -39,3 +39,7 @@ next-env.d.ts
 # IDE
 .vscode/
 .idea/
+
+# Adobe After Effects files
+*.aep
+**/Adobe After Effects Auto-Save/

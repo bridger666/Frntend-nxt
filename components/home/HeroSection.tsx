@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import GridOverlay from './GridOverlay';
-import RotatingText from './RotatingText';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function HeroSection() {
@@ -43,10 +42,10 @@ export default function HeroSection() {
         requestAnimationFrame(() => {
           const y = window.scrollY;
           if (videoRef.current) {
-            videoRef.current.style.transform = `translateY(${y * 0.3}px)`;
+            videoRef.current.style.transform = `translateY(${y * 0.6}px)`;
           }
           if (contentRef.current) {
-            contentRef.current.style.transform = `translateY(${y * -0.1}px)`;
+            contentRef.current.style.transform = `translateY(${y * -0.35}px)`;
           }
           ticking = false;
         });
@@ -91,7 +90,7 @@ export default function HeroSection() {
         style={{ padding: '6rem 2rem', willChange: 'transform' }}
       >
         <h1
-          className="text-[36px] md:text-[56px] font-light mb-2 tracking-tight text-white/90 text-center leading-[1.1]"
+          className="text-[36px] md:text-[56px] font-light mb-4 tracking-tight text-white/90 text-center leading-[1.1] animate-slide-up-1"
           style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           Make AI make sense
@@ -109,36 +108,42 @@ export default function HeroSection() {
           for your business
         </h1>
 
-        {/* Rotating subtitle */}
-        <RotatingText />
+        {/* Subheadline with ascending reveal */}
+        <div className="mb-10 w-full animate-slide-up-2">
+          <p className="text-[21px] md:text-[33.6px] font-light text-[#aec99d] text-center w-full leading-tight" style={{ fontFamily: "'Manrope', sans-serif", margin: 0 }}>
+            Start with clarity.<br />End with a system that runs.
+          </p>
+        </div>
 
         {/* CTA Button */}
-        <a
-          href="/free-diagnostic"
-          className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/60 bg-black/60 hover:bg-white hover:text-black hover:border-white"
-          style={{
-            padding: '0.75rem 1.5rem',
-            fontFamily: "'Manrope', sans-serif",
-            fontWeight: 400,
-            fontSize: '0.75rem',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-          }}
-        >
-          <svg
-            className="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="animate-slide-up-3">
+          <a
+            href="/free-diagnostic"
+            className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/60 bg-black/60 hover:bg-white hover:text-black hover:border-white"
+            style={{
+              padding: '0.75rem 1.5rem',
+              fontFamily: "'Manrope', sans-serif",
+              fontWeight: 400,
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+            }}
           >
-            <path d="M17 7v10H7" />
-            <path d="M7 7l10 10" />
-          </svg>
-          START WITH FREE DIAGNOSTIC
-        </a>
+            <svg
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M17 7v10H7" />
+              <path d="M7 7l10 10" />
+            </svg>
+            START WITH FREE DIAGNOSTIC
+          </a>
+        </div>
       </div>
 
       {/* Scroll to Explore Indicator */}

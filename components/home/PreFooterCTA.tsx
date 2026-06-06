@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import ContactModal from './ContactModal';
 
@@ -22,6 +22,30 @@ const services = [
     description: 'Long-term support for AI transformation, governance, and implementation.',
   },
 ];
+
+const ServiceCard = ({ service }: { service: typeof services[0] }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty('--mouse-x', `${x}px`);
+    cardRef.current.style.setProperty('--mouse-y', `${y}px`);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="relative spotlight-card border border-white/10 p-8 transition-colors bg-[#0a0a0a] overflow-hidden rounded-xl"
+    >
+      <h3 className="text-xl font-normal text-white mb-3 relative z-10">{service.title}</h3>
+      <p className="text-[#b2b2b2] font-light leading-relaxed relative z-10">{service.description}</p>
+    </div>
+  );
+};
 
 export default function PreFooterCTA() {
   const { ref, isVisible } = useScrollAnimation();
@@ -48,13 +72,7 @@ export default function PreFooterCTA() {
           {/* Service Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
             {services.map((service) => (
-              <div
-                key={service.title}
-                className="border border-white/10 p-8 hover:border-white/25 transition-colors"
-              >
-                <h3 className="text-xl font-normal text-white mb-3">{service.title}</h3>
-                <p className="text-[#b2b2b2] font-light leading-relaxed">{service.description}</p>
-              </div>
+              <ServiceCard key={service.title} service={service} />
             ))}
           </div>
 

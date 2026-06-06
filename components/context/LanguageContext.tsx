@@ -14,7 +14,7 @@ interface LanguageContextProps {
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('id');
   const [exchangeRate, setExchangeRate] = useState<number>(16000); // default fallback
 
   useEffect(() => {

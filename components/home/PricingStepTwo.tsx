@@ -103,9 +103,17 @@ export default function PricingStepTwo() {
   const { ref, isVisible } = useScrollAnimation();
   const { formatPrice, language } = useLanguage();
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
-    <section ref={ref} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} w-full bg-[#dfe4e5] text-[#494949] py-24 font-sans`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section ref={ref} onMouseMove={handleMouseMove} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} spotlight-section w-full bg-[#dfe4e5] text-[#494949] py-24 font-sans`}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Header */}
         <div className="mb-20 text-center md:text-left">
           <div className="inline-block mb-6">
@@ -113,7 +121,7 @@ export default function PricingStepTwo() {
               <span className="text-[22px] md:text-[26px] font-extrabold text-[#494949]">Step 2</span>
               <StepIcon />
             </div>
-            <div className="w-full h-[3px] bg-[#0ae8af] mt-2 rounded-full" />
+            <div className="w-full h-[3px] bg-[#c4c9b8] mt-2 rounded-full" />
           </div>
           <h2 className="text-5xl md:text-6xl font-normal tracking-tight mb-6">Ready to Deploy? Pick Your Plan</h2>
           <p className="text-xl text-[#494949] font-light leading-relaxed">
@@ -122,26 +130,36 @@ export default function PricingStepTwo() {
         </div>
 
         {/* Plans Grid */}
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16 mb-20 items-stretch">
-          {plans.map((plan) => (
-            <div key={plan.name} className="flex flex-col">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 mb-20 items-stretch gap-y-12 md:gap-y-0">
+          {plans.map((plan, idx) => (
+            <div 
+              key={plan.name} 
+              className={`flex flex-col ${
+                idx === 0 ? 'md:pr-10' : idx === 1 ? 'md:px-10 md:border-x border-[#b0b5b4]' : 'md:pl-10'
+              }`}
+            >
               {/* Title */}
-              <div className="min-h-[104px] pb-6">
-                <h3 className="max-w-[380px] text-[24px] md:text-[28px] lg:text-[30px] font-normal leading-[1.02] text-[#494949]">
-                  {plan.name}
-                </h3>
-                <p className="mt-3 max-w-[340px] text-[14px] md:text-[15px] font-medium leading-[1.25] text-[#494949]">
-                  {plan.description}
-                </p>
-              </div>
+              <div className="flex-grow flex flex-col">
+                <div className="min-h-[96px] pb-6">
+                  <h3 className="max-w-[380px] text-[22px] md:text-[24px] lg:text-[26px] font-normal leading-[1.05] text-[#494949]">
+                    {plan.name}
+                  </h3>
+                  <p className="mt-3 max-w-[340px] text-[14px] md:text-[15px] font-medium leading-[1.25] text-[#494949]">
+                    {plan.description}
+                  </p>
+                </div>
 
               {/* Price */}
-              <div className="flex items-center justify-between gap-3 border-t border-[#b0b5b4] border-b border-b-[#b0b5b4] py-8 sm:gap-6">
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <span className={`${language === 'id' ? 'text-[35px] sm:text-[40px] md:text-[43px]' : 'text-[42px] sm:text-[48px] md:text-[52px]'} font-extrabold leading-none whitespace-nowrap`}>{formatPrice(plan.price)}</span>
-                  <span className="pt-3 text-[14px] sm:text-[15px] md:text-[16px] font-bold leading-none text-[#7b7f7f]">{plan.frequency}</span>
+              <div className="flex items-center justify-start gap-3 py-6 mt-2">
+                <span className={`${language === 'id' ? 'text-[28px] sm:text-[32px] md:text-[38px]' : 'text-[42px] sm:text-[48px] md:text-[52px]'} font-extrabold leading-none whitespace-nowrap text-[#1a1a1a]`}>
+                  {formatPrice(plan.price)}
+                </span>
+                <div className="flex flex-col pt-1">
+                  <span className="text-[14px] sm:text-[15px] md:text-[16px] font-normal leading-none text-[#494949] mb-[6px]">
+                    {language === 'id' ? plan.frequency.replace('(month)', '(bulan)') : plan.frequency}
+                  </span>
+                  <div className="w-full h-[5px] bg-[#c4c9b8]" />
                 </div>
-                <ArrowUpRight className="h-10 w-10 shrink-0 text-[#0ae8af] md:h-12 md:w-12" />
               </div>
 
               {/* Features */}
@@ -150,15 +168,17 @@ export default function PricingStepTwo() {
                   <li key={f}>• {f}</li>
                 ))}
               </ul>
+              </div>
 
               {/* CTA */}
-              <button
-                type="button"
-                className="group mt-auto pt-16 inline-flex items-center gap-2 self-start text-[16px] font-bold leading-none text-[#494949] transition-colors hover:text-[#303030] sm:text-[18px]"
-              >
-                <ArrowDownRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:translate-y-1" />
-                <span className="pb-[6px] border-b-[12px] border-[#000000]">{plan.cta}</span>
-              </button>
+              <div className="pt-10 mt-auto">
+                <button
+                  type="button"
+                  className="w-full bg-[#c4c9b8] text-[#494949] py-[14px] px-4 text-[15px] md:text-[16px] font-medium text-center transition-colors hover:bg-[#b0b5a4]"
+                >
+                  {plan.cta}
+                </button>
+              </div>
             </div>
           ))}
         </div>
