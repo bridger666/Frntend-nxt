@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+*.aep
+**/Adobe After Effects Auto-Save/
+.DS_Store
+.env
+.env.local
+.kiro
+public/hero-video/*.mp4
+public/hero-video/*.aep
+public/hero-video/Adobe After Effects Auto-Save
+public/hero-video/Fills
