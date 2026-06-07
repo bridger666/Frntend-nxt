@@ -34,7 +34,7 @@ export default function PrivacySection() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="mb-4">
           <div className="text-sm font-medium mb-6">Privacy &amp; Security</div>
-          <h2 className="text-5xl md:text-6xl font-normal tracking-tight mb-10">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-10">
             Your data stays<br />where it belongs.
           </h2>
 

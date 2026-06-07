@@ -180,7 +180,7 @@ export function TechLabSection() {
 
           {/* Card 04 - col-span-3 */}
           <SpotlightCard className={`col-span-1 md:col-span-1 lg:col-span-3 p-8 justify-between ${inView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '300ms' }}>
-            <div className="max-w-[80%]">
+            <div className="max-w-full lg:max-w-[80%]">
               <span className="text-[#555] font-mono text-sm mb-6 block">04.</span>
               <h3 className="text-white font-medium text-lg mb-3">Corporate Training</h3>
               <p className="text-white/50 text-[13px] font-light leading-relaxed mb-10">
@@ -212,7 +212,7 @@ export function TechLabSection() {
 
           {/* Card 05 - col-span-3 */}
           <SpotlightCard className={`col-span-1 md:col-span-1 lg:col-span-3 p-8 justify-between ${inView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '400ms' }}>
-            <div className="max-w-[80%]">
+            <div className="max-w-full lg:max-w-[80%]">
               <span className="text-[#555] font-mono text-sm mb-6 block">05.</span>
               <h3 className="text-white font-medium text-lg mb-3">Enterprise Advisory</h3>
               <p className="text-white/50 text-[13px] font-light leading-relaxed mb-10">

@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <Navbar />
 
       {/* Hero Header */}
-      <section className="relative pt-48 pb-12 bg-black overflow-hidden">
+      <section className="relative pt-32 md:pt-48 pb-12 bg-black overflow-hidden">
         <div className="relative z-10 px-6 max-w-3xl mx-auto flex flex-col items-start w-full">
           {/* Eyebrow Logo */}
           <div className="mb-10">

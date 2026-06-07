@@ -123,7 +123,7 @@ export default function PricingStepTwo() {
             </div>
             <div className="w-full h-[3px] bg-[#c4c9b8] mt-2 rounded-full" />
           </div>
-          <h2 className="text-5xl md:text-6xl font-normal tracking-tight mb-6">Ready to Deploy? Pick Your Plan</h2>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight mb-6">Ready to Deploy? Pick Your Plan</h2>
           <p className="text-xl text-[#494949] font-light leading-relaxed">
             Everything you need to deploy, manage, build workflow from natural language, launch agents and scale AI operations from one platform.
           </p>
@@ -135,7 +135,7 @@ export default function PricingStepTwo() {
             <div 
               key={plan.name} 
               className={`flex flex-col ${
-                idx === 0 ? 'md:pr-10' : idx === 1 ? 'md:px-10 md:border-x border-[#b0b5b4]' : 'md:pl-10'
+                idx === 0 ? 'md:pr-10 pb-12 border-b border-[#b0b5b4] md:border-b-0 md:pb-0' : idx === 1 ? 'md:px-10 md:border-x border-[#b0b5b4] pb-12 border-b md:border-b-0 md:pb-0' : 'md:pl-10'
               }`}
             >
               {/* Title */}

@@ -85,8 +85,8 @@ export default function HeroSection() {
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl"
-        style={{ padding: '6rem 2rem', willChange: 'transform' }}
+        className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl px-5 md:px-8 pt-16 pb-16 md:pt-24 md:pb-24"
+        style={{ willChange: 'transform' }}
       >
         <h1
           className="text-[36px] md:text-[56px] font-light mb-4 tracking-tight text-white/90 text-center leading-[1.1] animate-slide-up-1"
@@ -116,7 +116,7 @@ export default function HeroSection() {
         <div className="animate-slide-up-3" style={{ animationDelay: '2.8s' }}>
           <a
             href="/free-diagnostic"
-            className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/20 bg-black/60 hover:bg-white hover:text-black hover:border-white animate-gentle-bounce"
+            className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/20 bg-black/60 hover:bg-white hover:text-black hover:border-white animate-gentle-bounce min-h-[44px]"
             style={{
               padding: '0.75rem 1.5rem',
               fontFamily: "'Manrope', sans-serif",
@@ -146,11 +146,11 @@ export default function HeroSection() {
       {/* Scroll to Explore Indicator */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none opacity-0 animate-fade-in" style={{ animationDelay: '3.5s', animationFillMode: 'forwards' }}>
         <div className="flex flex-col items-center animate-pulse" style={{ animationDuration: '3s' }}>
-          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent to-white/80" />
+          <div className="w-[1px] h-10 md:h-16 bg-gradient-to-b from-transparent to-white/80" />
           <span className="text-[10px] text-[#c4c9b8] tracking-[0.35em] font-light uppercase my-4 font-manrope">
             SCROLL TO EXPLORE
           </span>
-          <div className="w-[1px] h-16 bg-gradient-to-t from-transparent to-white/80" />
+          <div className="w-[1px] h-10 md:h-16 bg-gradient-to-t from-transparent to-white/80" />
         </div>
       </div>
       {/* Fixed dark grid cell — canvas is clipped to never draw here; CSS div is fully opaque */}

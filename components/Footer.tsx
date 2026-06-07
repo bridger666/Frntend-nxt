@@ -34,7 +34,7 @@ export default function Footer() {
       <div ref={ref} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           {/* 5-column grid */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-12 md:gap-8 mb-32">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-12 md:gap-8 mb-16 md:mb-32">
             {/* Product */}
             <div className="col-span-1">
               <h4 className="text-gray-500 text-sm font-normal mb-4">Product</h4>

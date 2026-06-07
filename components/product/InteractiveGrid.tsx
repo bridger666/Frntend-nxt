@@ -359,7 +359,47 @@ export function InteractiveGrid() {
           </SpotlightCard>
 
         </div>
+        
+        {/* Scrolling Logo Marquee */}
+        <IntegrationsMarquee />
+        
       </div>
     </section>
+  );
+}
+
+function IntegrationsMarquee() {
+  const logos = [
+    { name: 'Zoom', icon: '/integrations/icons/discord.svg' }, // using placeholder icons if real ones missing
+    { name: 'Letta', icon: '/integrations/icons/stripe-v2-svgrepo-com.svg' },
+    { name: 'Glean', icon: '/integrations/icons/google-drive.svg' },
+    { name: 'HubSpot', icon: '/integrations/icons/hubspot-svgrepo-com.svg' },
+    { name: 'Slack', icon: '/integrations/icons/slack.svg' },
+    { name: 'Salesforce', icon: '/integrations/icons/salesforce.svg' },
+    { name: 'OpenAI', icon: '/integrations/icons/openai.svg' },
+    { name: 'Zendesk', icon: '/integrations/icons/zendesk.svg' },
+    { name: 'GitHub', icon: '/integrations/icons/github.svg' },
+  ];
+
+  // duplicate logos for seamless scrolling
+  const marqueeItems = [...logos, ...logos];
+
+  return (
+    <div className="w-full mt-32 mb-10 overflow-hidden relative opacity-40 hover:opacity-100 transition-opacity duration-700">
+      {/* gradient masks for smooth edges */}
+      <div className="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      
+      <div className="flex w-[200%] animate-marquee">
+        {marqueeItems.map((item, idx) => (
+          <div key={idx} className="flex flex-1 items-center justify-center gap-3 grayscale transition-all duration-300 px-8">
+            {item.name === 'Zoom' || item.name === 'Glean' ? null : (
+              <img src={item.icon} alt={item.name} className="w-7 h-7 object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
+            )}
+            <span className="text-white/80 font-semibold text-xl tracking-tight" style={{ fontFamily: item.name === 'Zoom' ? 'sans-serif' : 'inherit' }}>{item.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

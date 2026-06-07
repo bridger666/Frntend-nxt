@@ -11,14 +11,14 @@ export default function FeatureCards() {
 
   return (
     <>
-      <div ref={animRef} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} w-full pt-24 pb-12 relative`} id="features" style={{ background: 'transparent', zIndex: 1 }}>
+      <div ref={animRef} className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} w-full pt-24 pb-12 relative bg-black`} id="features" style={{ zIndex: 1 }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24 relative z-[1]">
-          <div className="text-left flex flex-col justify-center">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight text-white">
+          <div className="text-center flex flex-col justify-center items-center">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight text-white max-w-3xl">
               Turn your AI Confusion<br />Into AI Execution
             </h2>
-            <p className="text-white/60 max-w-lg font-light leading-relaxed mb-6">
-              Aivory™ helps organizations discover where AI creates value,<br />
+            <p className="text-white/60 max-w-2xl font-light leading-relaxed mb-6">
+              Aivory™ helps organizations discover where AI creates value,
               design the right systems, and deploy AI with confidence
             </p>
           </div>

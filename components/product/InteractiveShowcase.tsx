@@ -107,7 +107,7 @@ function DiagnosticAnimation() {
           ))}
           {phase === 'thinking' && (
             <div className="flex items-center gap-2 mt-4 animate-fade-in-up">
-               <span className="text-sm text-[#aec99d] font-medium tracking-wide">Agents Analyzing{dots}</span>
+               <span className="text-sm text-[#aec99d] font-medium tracking-wide">Aivory is analyzing{dots}</span>
             </div>
           )}
         </div>
@@ -140,58 +140,258 @@ function DiagnosticAnimation() {
 }
 
 function ConsoleAnimation() {
+  const [phase, setPhase] = useState<'typing' | 'sent' | 'thinking' | 'response'>('typing');
+  const [typedText, setTypedText] = useState('');
+  const [dots, setDots] = useState('');
+  const timerRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const fullText = "Can you analyze my current lead generation process?";
+
+  const clearAll = () => { timerRefs.current.forEach(clearTimeout); timerRefs.current = []; };
+  const t = (fn: () => void, s: number) => timerRefs.current.push(setTimeout(fn, s * 1000));
+
+  useEffect(() => {
+    const run = () => {
+      setPhase('typing');
+      setTypedText('');
+      
+      let currentText = '';
+      const typeChar = (i: number) => {
+        if (i < fullText.length) {
+          currentText += fullText[i];
+          setTypedText(currentText);
+          timerRefs.current.push(setTimeout(() => typeChar(i + 1), 40));
+        } else {
+          t(() => setPhase('sent'), 0.4);
+          t(() => setPhase('thinking'), 0.8);
+          t(() => setPhase('response'), 2.8);
+          t(run, 10.0);
+        }
+      };
+      
+      t(() => typeChar(0), 0.5);
+    };
+    run();
+    return clearAll;
+  }, []);
+
+  useEffect(() => {
+    if (phase !== 'thinking') return;
+    let i = 0;
+    const id = setInterval(() => { i = (i + 1) % 4; setDots('.'.repeat(i)); }, 400);
+    return () => clearInterval(id);
+  }, [phase]);
+
   return (
-    <div className="w-full h-full flex flex-col justify-center p-2 font-light">
-      <div className="flex flex-col gap-4 w-full max-w-[100%] mx-auto">
-        <div className="flex justify-end opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          <div className="bg-[#2A2A2A] border border-white/5 rounded-2xl rounded-tr-sm px-5 py-4 text-white/90 text-sm shadow-md max-w-[100%]">
-            Can you analyze my current lead generation process?
+    <div className="w-full h-full flex flex-col justify-end p-4 font-light relative pb-20">
+      <div className="flex flex-col gap-6 w-full max-w-[100%] mx-auto mb-4">
+        
+        {/* User Message */}
+        <div className={`flex justify-end transition-all duration-300 ease-out ${phase !== 'typing' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="bg-[#2A2A2A] rounded-3xl rounded-tr-md px-5 py-3 text-white/90 text-[14px] max-w-[85%] leading-relaxed shadow-md">
+            {fullText}
           </div>
         </div>
         
-        <div className="flex flex-col gap-4 mt-2">
-          {/* Header: Circles + Text */}
-          <div className="flex items-center gap-3 opacity-0 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
-            <div className="flex -space-x-2">
-              <div className="w-6 h-6 rounded-full bg-[#556B2F] border-2 border-[#181818] relative z-30" />
-              <div className="w-6 h-6 rounded-full bg-[#6B8E23] border-2 border-[#181818] relative z-20" />
-              <div className="w-6 h-6 rounded-full bg-[#9ACD32] border-2 border-[#181818] relative z-10" />
-            </div>
-            <div className="text-white/80 text-sm font-medium flex items-center gap-2">
-              Agents analyzing <span className="text-white/40">·</span> <span className="text-[#aec99d] animate-pulse">Processing...</span>
-            </div>
-          </div>
-
-          {/* Search Results List */}
-          <div className="flex flex-col gap-3 pl-2">
-            {[
-              { source: 'Queried CRM', query: 'lead response time operations data', results: '520 records', delay: '2.0s' },
-              { source: 'Analyzed Logs', query: 'email triage flow delay analysis', results: '12 bottlenecks', delay: '2.8s' },
-            ].map((item, i) => (
-              <div key={i} className="flex flex-col gap-1 opacity-0 animate-fade-in-up" style={{ animationDelay: item.delay }}>
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2 text-xs">
-                    <svg className="w-4 h-4 text-[#aec99d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <span className="text-white/70">{item.source}</span>
-                  </div>
-                  <div className="text-white/40 text-[11px]">
-                    <span>{item.results}</span>
-                  </div>
-                </div>
-                <div className="ml-6 font-mono text-[11px] sm:text-xs text-white/60 bg-white/5 w-fit max-w-[calc(100%-1.5rem)] px-3 py-1.5 rounded-md border border-white/5 break-words">
-                  {item.query}
-                </div>
+        {/* AI Thinking & Response Area */}
+        <div className={`flex flex-col gap-3 transition-all duration-300 ${phase === 'thinking' || phase === 'response' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 hidden'}`}>
+          {/* Thinking Indicator */}
+          {phase === 'thinking' && (
+            <div className="flex items-center gap-2.5">
+              <div className="flex -space-x-1.5 opacity-80">
+                <div className="w-4 h-4 rounded-full bg-[#556B2F] border border-[#181818] relative z-30" />
+                <div className="w-4 h-4 rounded-full bg-[#6B8E23] border border-[#181818] relative z-20" />
+                <div className="w-4 h-4 rounded-full bg-[#9ACD32] border border-[#181818] relative z-10" />
               </div>
-            ))}
-          </div>
+              <div className="text-white/50 text-[13px] font-medium flex items-center gap-1.5">
+                Aivory is thinking <span className="animate-pulse">{dots}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Response Text */}
+          {phase === 'response' && (
+            <div className="flex flex-col gap-3 pl-1 animate-fade-in-up">
+              <div className="text-white/60 text-[14px] leading-relaxed">
+                Analysis complete:
+              </div>
+              <div className="flex flex-col gap-3">
+                {[
+                  { text: 'Queried CRM records: 520 leads analyzed.', delay: '0s' },
+                  { text: 'Flow analysis: 12 bottlenecks identified in triage.', delay: '0.4s' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5 opacity-0 animate-fade-in-up" style={{ animationDelay: item.delay }}>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#aec99d] mt-1.5 shrink-0" />
+                    <span className="text-white/80 text-[14px] leading-relaxed">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="w-full max-w-[100%] mx-auto mt-2 bg-[#1D1D1D] border border-white/5 rounded-full px-5 py-3.5 flex items-center gap-3 shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <svg className="w-4 h-4 text-[#aec99d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>
-        <div className="text-white/40 text-sm animate-pulse">Waiting for prompt...</div>
+      <div className="absolute bottom-4 left-4 right-4 bg-[#222222] border border-white/5 rounded-full pl-3 pr-2 py-2 flex items-center gap-3 shadow-lg">
+        <button className="w-7 h-7 rounded-full flex items-center justify-center text-white/40 hover:text-white/70 transition-colors shrink-0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14m-7-7h14" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+        <div className="flex-1 text-[14px] truncate flex items-center transition-colors">
+          {phase === 'typing' ? (
+            <span className="text-white/90">{typedText}<span className="ml-[2px] w-[2px] h-3.5 bg-white/60 animate-pulse inline-block align-middle" /></span>
+          ) : (
+            <span className="text-white/30">What do you want to know?</span>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button className="w-7 h-7 flex items-center justify-center text-white/50 hover:text-white/80 transition-colors hidden sm:flex">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+          <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black hover:bg-white/90 transition-colors">
+            {phase === 'typing' || phase === 'thinking' ? (
+              <div className="w-3 h-3 bg-black rounded-[2px]" />
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WorkflowAnimation() {
+  const [phase, setPhase] = useState<'typing' | 'sent' | 'generating' | 'generated'>('typing');
+  const [typedText, setTypedText] = useState('');
+  const [dots, setDots] = useState('');
+  const timerRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const fullText = "Create workflow to extract email leads and send them to Slack.";
+
+  const clearAll = () => { timerRefs.current.forEach(clearTimeout); timerRefs.current = []; };
+  const t = (fn: () => void, s: number) => timerRefs.current.push(setTimeout(fn, s * 1000));
+
+  useEffect(() => {
+    const run = () => {
+      setPhase('typing');
+      setTypedText('');
+      
+      let currentText = '';
+      const typeChar = (i: number) => {
+        if (i < fullText.length) {
+          currentText += fullText[i];
+          setTypedText(currentText);
+          timerRefs.current.push(setTimeout(() => typeChar(i + 1), 30));
+        } else {
+          t(() => setPhase('sent'), 0.4);
+          t(() => setPhase('generating'), 0.8);
+          t(() => setPhase('generated'), 2.8);
+          t(run, 10.0);
+        }
+      };
+      t(() => typeChar(0), 0.5);
+    };
+    run();
+    return clearAll;
+  }, []);
+
+  useEffect(() => {
+    if (phase !== 'generating') return;
+    let i = 0;
+    const id = setInterval(() => { i = (i + 1) % 4; setDots('.'.repeat(i)); }, 400);
+    return () => clearInterval(id);
+  }, [phase]);
+
+  return (
+    <div className="w-full flex flex-col gap-4 h-full justify-end relative pb-20 p-4 font-light">
+      <div className="flex flex-col gap-6 w-full max-w-[100%] mx-auto mb-4">
+        {/* User Message */}
+        <div className={`flex justify-end transition-all duration-300 ease-out ${phase !== 'typing' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+           <div className="bg-[#2A2A2A] rounded-3xl rounded-tr-md px-5 py-3 text-white/90 text-[14px] max-w-[90%] leading-relaxed shadow-md">
+             {fullText}
+           </div>
+        </div>
+
+        {/* Generating Indicator */}
+        <div className={`flex items-center gap-2.5 transition-all duration-300 ${phase === 'generating' || phase === 'generated' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 hidden'}`}>
+           {phase === 'generating' ? (
+             <>
+               <div className="w-4 h-4 rounded-full border-2 border-white/10 border-t-[#aec99d] animate-spin shrink-0" />
+               <span className="text-white/50 text-[13px] font-medium">Aivory is generating workflow<span className="animate-pulse">{dots}</span></span>
+             </>
+           ) : null}
+        </div>
+
+        {/* Generated Flow */}
+        {phase === 'generated' && (
+          <div className="w-full bg-[#111111] border border-white/5 rounded-2xl p-6 flex flex-col gap-6 relative overflow-hidden shadow-2xl animate-fade-in-up">
+            <div className="text-[10px] text-white uppercase tracking-widest text-center font-light z-10" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+              Workflow Generated
+            </div>
+
+            <div className="flex items-center justify-between w-full max-w-sm mx-auto z-10 relative">
+              {/* Connecting Lines */}
+              <div className="absolute top-1/2 left-[15%] right-[15%] h-[1px] bg-white/10 -translate-y-1/2 -z-10" />
+              <div className="absolute top-1/2 left-[15%] right-[50%] h-[1px] bg-[#aec99d] -translate-y-1/2 -z-10 origin-left animate-scale-x" />
+              <div className="absolute top-1/2 left-[50%] right-[15%] h-[1px] bg-[#aec99d] -translate-y-1/2 -z-10 origin-left animate-scale-x" style={{ animationDelay: '0.4s' }} />
+
+              {/* Node 1: Trigger */}
+              <div className="flex flex-col rounded-lg border border-[#aec99d]/30 shadow-md flex-shrink-0 bg-[#333333] min-w-[90px]">
+                <div className="px-2 py-1.5 text-center">
+                  <span className="text-[9px] text-white/70 uppercase tracking-widest font-medium">Trigger</span>
+                </div>
+                <div className="bg-[#aec99d] px-2 py-3 text-center rounded-b-lg flex flex-col items-center justify-center gap-1.5">
+                  <img src="/integrations/icons/gmail.svg" alt="Gmail" className="w-5 h-5 drop-shadow-sm" />
+                  <span className="text-xs font-semibold text-[#111111]">Gmail</span>
+                </div>
+              </div>
+              
+              {/* Node 2: Agent */}
+              <div className="flex flex-col rounded-lg border border-white/25 shadow-md relative flex-shrink-0 bg-[#333333] min-w-[90px] animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#939393] animate-ping opacity-60 z-20" />
+                <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#939393] z-20" />
+                <div className="px-2 py-1.5 text-center">
+                  <span className="text-[9px] text-[#939393] uppercase tracking-widest font-medium">AI Agent</span>
+                </div>
+                <div className="bg-[#111] px-2 py-3 text-center rounded-b-lg border-t border-[#939393]/30">
+                  <span className="text-xs font-semibold text-[#939393]">Extract</span>
+                </div>
+              </div>
+
+              {/* Node 3: Action */}
+              <div className="flex flex-col rounded-lg border border-[#aec99d]/30 shadow-md flex-shrink-0 bg-[#333333] min-w-[90px] animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+                <div className="px-2 py-1.5 text-center">
+                  <span className="text-[9px] text-white/70 uppercase tracking-widest font-medium">Action</span>
+                </div>
+                <div className="bg-[#aec99d] px-2 py-3 text-center rounded-b-lg flex flex-col items-center justify-center gap-1.5">
+                  <img src="/integrations/icons/slack.svg" alt="Slack" className="w-5 h-5 drop-shadow-sm" />
+                  <span className="text-xs font-semibold text-[#111111]">Slack</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="absolute bottom-4 left-4 right-4 bg-[#222222] border border-white/5 rounded-full pl-3 pr-2 py-2 flex items-center gap-3 shadow-lg">
+        <button className="w-7 h-7 rounded-full flex items-center justify-center text-white/40 hover:text-white/70 transition-colors shrink-0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14m-7-7h14" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+        <div className="flex-1 text-[14px] truncate flex items-center transition-colors">
+          {phase === 'typing' ? (
+            <span className="text-white/90">{typedText}<span className="ml-[2px] w-[2px] h-3.5 bg-white/60 animate-pulse inline-block align-middle" /></span>
+          ) : (
+            <span className="text-white/30">What do you want to automate?</span>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black hover:bg-white/90 transition-colors">
+            {phase === 'typing' || phase === 'generating' ? (
+              <div className="w-3 h-3 bg-black rounded-[2px]" />
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -271,15 +471,15 @@ export function InteractiveShowcase() {
     <section id="showcase" className="relative bg-black text-white py-16 md:py-32 border-b border-white/10">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24">
         {/* Sticky Scroll Layout Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative">
           
           {/* Left Column: Scrollable Description Blocks */}
-          <div className="lg:col-span-6 flex flex-col gap-[30vh] lg:pb-[20vh]">
+          <div className="lg:col-span-5 flex flex-col gap-16 lg:gap-[30vh] lg:pb-[20vh]">
             <div ref={introRef} className="lg:min-h-[40vh] flex flex-col justify-center">
               <h2 className="text-[#c4c9b8] uppercase tracking-widest text-xs font-manrope font-light mb-3">
                 Operational Framework
               </h2>
-              <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-6 leading-tight">
                 From Assessment<br />to Staged Autonomy
               </h3>
               <p className="text-white/60 max-w-lg font-light leading-relaxed">
@@ -333,7 +533,7 @@ export function InteractiveShowcase() {
           </div>
 
           {/* Right Column: Sticky Mockup Visualizer Area */}
-          <div className="lg:col-span-6 lg:sticky lg:top-[12vh] flex items-center justify-center z-20 mx-auto w-full max-w-[720px] aspect-[4/3]">
+          <div className="lg:col-span-7 lg:sticky lg:top-[12vh] flex items-center justify-center z-20 mx-auto w-full max-w-[850px] aspect-[4/3] lg:aspect-[16/11]">
             <div 
               ref={stickyBoxRef}
               className={`w-full h-full bg-[#181818] border transition-all duration-500 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden shadow-2xl ${
@@ -387,7 +587,7 @@ export function InteractiveShowcase() {
                 >
                   <div key={`blue-${activeIndex === 1 ? 'active' : 'inactive'}`} className="flex-1 flex flex-col justify-center items-center w-full h-full opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                     <div className="w-full bg-[#111111] border border-white/5 rounded-2xl p-8 relative shadow-lg">
-                      <div className="text-[10px] text-white/40 uppercase tracking-widest text-center font-light mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', fontFamily: "'Doto', 'Courier New', monospace" }}>
+                      <div className="text-[10px] text-white uppercase tracking-widest text-center font-light mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', fontFamily: "'Doto', 'Courier New', monospace" }}>
                         System Architecture Pipeline
                       </div>
                       
@@ -455,7 +655,7 @@ export function InteractiveShowcase() {
 
                     {/* Deliverables list */}
                     <div className="bg-[#111111] border border-white/5 rounded-2xl p-6 mx-auto w-full max-w-md space-y-4 shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '2.0s' }}>
-                      <div className="text-[10px] text-white/40 uppercase tracking-widest font-light" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+                      <div className="text-[10px] text-white uppercase tracking-widest font-light" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
                         Wave 1 Milestone Action List
                       </div>
                       <div className="space-y-3">
@@ -501,64 +701,8 @@ export function InteractiveShowcase() {
                     activeIndex === 4 ? 'opacity-100 pointer-events-auto z-10' : 'opacity-0 pointer-events-none'
                   }`}
                 >
-                  <div key={`wf-${activeIndex === 4 ? 'active' : 'inactive'}`} className="w-full flex flex-col gap-4 h-full justify-center">
-                    {/* Chat Prompt for Workflow */}
-                    <div className="bg-[#111111] border border-white/5 rounded-2xl p-4 flex gap-4 items-center shadow-lg opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                      <div className="w-9 h-9 rounded-full bg-[#1e1e1e] flex-shrink-0 flex items-center justify-center text-sm font-medium text-white/80 border border-white/5 shadow-sm">U</div>
-                      <div className="text-white/90 text-sm flex-1 font-light leading-relaxed">
-                        Create an automation workflow to extract email leads and send them to Slack.
-                      </div>
-                      <div className="w-5 h-5 rounded-full border-2 border-white/10 border-t-[#939393] flex-shrink-0 animate-spin opacity-0" style={{ animation: 'fade-in 0.1s ease-out 0.8s forwards, spin 1s linear infinite, fade-out 0.2s ease-in 2.5s forwards' }} />
-                    </div>
-
-                    {/* Generated Flow */}
-                    <div className="w-full bg-[#111111] border border-white/5 rounded-2xl p-6 flex flex-col gap-6 relative overflow-hidden shadow-2xl opacity-0 animate-fade-in-up" style={{ animationDelay: '2.5s' }}>
-                      <div className="absolute inset-0 bg-[#939393]/5 opacity-0" style={{ animation: 'fade-in 1s ease-out 3s forwards, pulse 3s ease-in-out infinite alternate 4s' }} />
-                      <div className="text-[10px] text-white/40 uppercase tracking-widest text-center font-light z-10" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
-                        Workflow Generated
-                      </div>
-
-                      <div className="flex items-center justify-between w-full max-w-sm mx-auto z-10 relative">
-                        {/* Connecting Lines */}
-                        <div className="absolute top-1/2 left-[15%] right-[15%] h-[1px] bg-white/10 -translate-y-1/2 -z-10" />
-                        <div className="absolute top-1/2 left-[15%] right-[50%] h-[1px] bg-white/30 -translate-y-1/2 -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '3.2s' }} />
-                        <div className="absolute top-1/2 left-[50%] right-[15%] h-[1px] bg-white/30 -translate-y-1/2 -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '4.0s' }} />
-
-                        {/* Node 1: Trigger */}
-                        <div className="flex flex-col rounded-lg border border-white/15 shadow-md opacity-0 animate-fade-in-up flex-shrink-0 bg-[#333333] min-w-[90px]" style={{ animationDelay: '2.8s' }}>
-                          <div className="px-2 py-1.5 text-center">
-                            <span className="text-[9px] text-white/70 uppercase tracking-widest font-medium">Trigger</span>
-                          </div>
-                          <div className="bg-[#aec99d] px-2 py-3 text-center rounded-b-lg flex flex-col items-center justify-center gap-1.5">
-                            <img src="/integrations/icons/gmail.svg" alt="Gmail" className="w-5 h-5 drop-shadow-sm" />
-                            <span className="text-xs font-semibold text-[#111111]">Gmail</span>
-                          </div>
-                        </div>
-                        
-                        {/* Node 2: Agent */}
-                        <div className="flex flex-col rounded-lg border border-white/25 shadow-md relative opacity-0 animate-fade-in-up flex-shrink-0 bg-[#333333] min-w-[90px]" style={{ animationDelay: '3.6s' }}>
-                          <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#939393] animate-ping opacity-60 z-20" />
-                          <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#939393] z-20" />
-                          <div className="px-2 py-1.5 text-center">
-                            <span className="text-[9px] text-[#939393] uppercase tracking-widest font-medium">AI Agent</span>
-                          </div>
-                          <div className="bg-[#111] px-2 py-3 text-center rounded-b-lg border-t border-[#939393]/30">
-                            <span className="text-xs font-semibold text-[#939393]">Extract</span>
-                          </div>
-                        </div>
-
-                        {/* Node 3: Action */}
-                        <div className="flex flex-col rounded-lg border border-white/15 shadow-md opacity-0 animate-fade-in-up flex-shrink-0 bg-[#333333] min-w-[90px]" style={{ animationDelay: '4.4s' }}>
-                          <div className="px-2 py-1.5 text-center">
-                            <span className="text-[9px] text-white/70 uppercase tracking-widest font-medium">Action</span>
-                          </div>
-                          <div className="bg-[#aec99d] px-2 py-3 text-center rounded-b-lg flex flex-col items-center justify-center gap-1.5">
-                            <img src="/integrations/icons/slack.svg" alt="Slack" className="w-5 h-5 drop-shadow-sm" />
-                            <span className="text-xs font-semibold text-[#111111]">Slack</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div key={`wf-${activeIndex === 4 ? 'active' : 'inactive'}`} className="w-full flex flex-col gap-4 h-full justify-center relative">
+                    {activeIndex === 4 && <WorkflowAnimation />}
                   </div>
                   <div className="text-[10px] text-white/30 text-center uppercase tracking-widest mt-6 pb-6 font-light">
                     * Natural language command translated into execution nodes.

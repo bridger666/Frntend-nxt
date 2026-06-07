@@ -21,6 +21,15 @@ const config: Config = {
       fontFamily: {
         manrope: ['var(--font-manrope)', 'sans-serif'],
       },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
       borderRadius: {
         sm: '6px',
         md: '12px',

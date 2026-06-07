@@ -1261,17 +1261,67 @@ body {
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .close-diagnostic-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
   .diagnostic-app {
-    padding: 4rem 1rem 1.5rem;
+    padding: 3.5rem 1rem 1.5rem;
+  }
+
+  .diagnostic-app.results-mode {
+    max-width: 100%;
   }
 
   .profile-header h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .profile-header p {
+    font-size: 0.95rem;
   }
 
   .question-text {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+  }
+
+  .question-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .option-card {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .options-list {
+    gap: 0.625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-next {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .ig-preview-area {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ig-slide-wrapper {
+    border-radius: 8px !important;
   }
 
   .upgrade-grid {
@@ -1280,7 +1330,25 @@ body {
 
   .upgrade-card,
   .strategy-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .upgrade-card h3,
+  .strategy-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .upgrade-price {
+    font-size: 2rem;
+  }
+
+  .nav-row {
+    gap: 0.5rem;
+  }
+
+  .btn-back {
+    font-size: 0.85rem;
   }
 }
 `;
+
