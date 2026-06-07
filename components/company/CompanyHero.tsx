@@ -45,8 +45,8 @@ export function CompanyHero() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
         <div className="w-[1px] h-20 bg-gradient-to-b from-transparent to-white/15" />
         <div
-          className="text-[9px] tracking-[0.15em] text-white/30 uppercase my-3 font-light"
-          style={{ fontFamily: "'Doto', 'Courier New', monospace" }}
+          className="text-[9px] tracking-[0.15em] text-[#c4c9b8] uppercase my-3 font-light"
+          style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           SCROLL TO EXPLORE
         </div>

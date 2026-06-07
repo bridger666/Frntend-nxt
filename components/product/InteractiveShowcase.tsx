@@ -276,7 +276,7 @@ export function InteractiveShowcase() {
           {/* Left Column: Scrollable Description Blocks */}
           <div className="lg:col-span-6 flex flex-col gap-[30vh] lg:pb-[20vh]">
             <div ref={introRef} className="lg:min-h-[40vh] flex flex-col justify-center">
-              <h2 className="text-[#b2cca2] uppercase tracking-widest text-xs font-semibold mb-3">
+              <h2 className="text-[#c4c9b8] uppercase tracking-widest text-xs font-manrope font-light mb-3">
                 Operational Framework
               </h2>
               <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight">
@@ -297,7 +297,7 @@ export function InteractiveShowcase() {
                   activeIndex === idx ? 'opacity-100 scale-100' : 'opacity-30 scale-95 lg:opacity-20'
                 }`}
               >
-                <span className="text-[#b2cca2] text-[15px] font-medium tracking-[0.2em] mb-4 uppercase" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+                <span className="text-[#c4c9b8] text-[15px] font-light tracking-[0.2em] mb-4 uppercase font-manrope">
                   {product.step}
                 </span>
                 <div className="flex items-center mb-6 relative w-full lg:w-[calc(100%+6rem)] z-10">
@@ -476,7 +476,7 @@ export function InteractiveShowcase() {
                       </div>
                     </div>
                   </div>
-                  <div className="text-[10px] text-white/30 text-center uppercase tracking-widest mt-6 pb-6 font-light">
+                  <div className="text-[10px] text-[#c4c9b8] text-center uppercase tracking-widest mt-6 pb-6 font-manrope font-light">
                     * Phased wave system mapping out operational integrations step-by-step.
                   </div>
                 </div>

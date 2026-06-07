@@ -302,7 +302,7 @@ export function InteractiveGrid() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-[#939393] uppercase tracking-widest text-xs font-semibold mb-3">
+          <h2 className="text-[#c4c9b8] uppercase tracking-widest text-xs font-manrope font-light mb-3">
             Core Utilities
           </h2>
           <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-4">

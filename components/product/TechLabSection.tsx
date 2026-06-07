@@ -52,7 +52,7 @@ export function TechLabSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12">
-          <span className="text-[#939393] uppercase tracking-widest text-xs font-semibold mb-3">
+          <span className="text-[#c4c9b8] uppercase tracking-widest text-xs font-manrope font-light mb-3">
             PRACTICE
           </span>
           <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white leading-tight mb-4">

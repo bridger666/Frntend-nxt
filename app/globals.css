@@ -754,6 +754,19 @@ body,
   animation-delay: 0.8s;
 }
 
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-gentle-bounce {
+  animation: gentle-bounce 3s ease-in-out infinite;
+}
+
 @keyframes particle-wavy {
   0% { background-position: 0px 0px; }
   25% { background-position: -50px 15px; }

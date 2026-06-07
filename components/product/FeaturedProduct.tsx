@@ -34,7 +34,7 @@ export function FeaturedProduct({
         }`}
       >
         <p
-          className="text-accent text-sm uppercase tracking-widest mb-4 font-medium"
+          className="text-[#c4c9b8] text-sm uppercase tracking-widest mb-4 font-light"
           style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           {tagline}

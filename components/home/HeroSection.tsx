@@ -3,9 +3,9 @@
 import { useEffect, useRef } from 'react';
 import GridOverlay from './GridOverlay';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import RotatingText from './RotatingText';
 
 export default function HeroSection() {
-  const { ref: animRef, isVisible } = useScrollAnimation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const darkCellRef = useRef<HTMLDivElement>(null);
@@ -62,8 +62,7 @@ export default function HeroSection() {
 
   return (
     <div
-      ref={animRef}
-      className={`animate-on-scroll ${isVisible ? 'is-visible' : ''} relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden`}
+      className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ background: '#030408' }}
     >
       {/* Background Video */}
@@ -91,7 +90,7 @@ export default function HeroSection() {
       >
         <h1
           className="text-[36px] md:text-[56px] font-light mb-4 tracking-tight text-white/90 text-center leading-[1.1] animate-slide-up-1"
-          style={{ fontFamily: "'Manrope', sans-serif" }}
+          style={{ fontFamily: "'Manrope', sans-serif", animationDelay: '2s' }}
         >
           Make AI make sense
           <span
@@ -108,18 +107,16 @@ export default function HeroSection() {
           for your business
         </h1>
 
-        {/* Subheadline with ascending reveal */}
-        <div className="mb-10 w-full animate-slide-up-2">
-          <p className="text-[21px] md:text-[33.6px] font-light text-[#aec99d] text-center w-full leading-tight" style={{ fontFamily: "'Manrope', sans-serif", margin: 0 }}>
-            Start with clarity.<br />End with a system that runs.
-          </p>
+        {/* Rotating subtitle with initial slide up */}
+        <div className="w-full animate-slide-up-2" style={{ animationDelay: '2.4s' }}>
+          <RotatingText />
         </div>
 
         {/* CTA Button */}
-        <div className="animate-slide-up-3">
+        <div className="animate-slide-up-3" style={{ animationDelay: '2.8s' }}>
           <a
             href="/free-diagnostic"
-            className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/60 bg-black/60 hover:bg-white hover:text-black hover:border-white"
+            className="inline-flex items-center gap-3 text-white no-underline uppercase cursor-pointer transition-all duration-[250ms] border border-white/20 bg-black/60 hover:bg-white hover:text-black hover:border-white animate-gentle-bounce"
             style={{
               padding: '0.75rem 1.5rem',
               fontFamily: "'Manrope', sans-serif",
@@ -147,10 +144,10 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll to Explore Indicator */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none opacity-0 animate-fade-in" style={{ animationDelay: '1.5s', animationFillMode: 'forwards' }}>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none opacity-0 animate-fade-in" style={{ animationDelay: '3.5s', animationFillMode: 'forwards' }}>
         <div className="flex flex-col items-center animate-pulse" style={{ animationDuration: '3s' }}>
           <div className="w-[1px] h-16 bg-gradient-to-b from-transparent to-white/80" />
-          <span className="text-[10px] text-white/90 tracking-[0.35em] font-light uppercase my-4" style={{ fontFamily: "'Doto', 'Courier New', monospace" }}>
+          <span className="text-[10px] text-[#c4c9b8] tracking-[0.35em] font-light uppercase my-4 font-manrope">
             SCROLL TO EXPLORE
           </span>
           <div className="w-[1px] h-16 bg-gradient-to-t from-transparent to-white/80" />

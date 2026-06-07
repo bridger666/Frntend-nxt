@@ -148,7 +148,7 @@ function DiagnosticAnimation() {
 function BlueprintAnimation() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-2">
-      <div className="text-[9px] text-[#aec99d] uppercase tracking-widest font-light mb-6 text-center w-full">Architecture Pipeline</div>
+      <div className="text-[9px] text-[#c4c9b8] uppercase tracking-widest font-light mb-6 text-center w-full font-manrope">Architecture Pipeline</div>
       <div className="flex justify-between items-center relative w-full px-2 mt-2">
         <div className="absolute top-[16px] left-[15%] right-[15%] h-[1px] bg-white/10 -z-10" />
         <div className="absolute top-[16px] left-[15%] right-[15%] h-[1px] bg-[#aec99d]/50 -z-10 overflow-hidden">
@@ -365,7 +365,7 @@ export function InteractiveGridShowcase() {
         
         {/* Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
-          <h2 className="text-[#b2cca2] uppercase tracking-widest text-xs font-semibold mb-3">
+          <h2 className="text-[#c4c9b8] uppercase tracking-widest text-xs font-manrope font-light mb-3">
             Operational Framework
           </h2>
           <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-6 leading-tight">

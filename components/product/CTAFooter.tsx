@@ -49,8 +49,8 @@ export function CTAFooter({ title, subtitle, primaryCta, secondaryCta }: CTAFoot
       <div className="max-w-4xl mx-auto px-6 text-center flex flex-col items-center relative z-10">
         {/* Monospaced tag */}
         <div
-          className="text-[12px] text-[#aec99d] tracking-[0.25em] uppercase mb-4 font-light"
-          style={{ fontFamily: "'Doto', 'Courier New', monospace" }}
+          className="text-[12px] text-[#c4c9b8] tracking-[0.25em] uppercase mb-4 font-manrope font-light"
+          style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           // GET STARTED NOW
         </div>

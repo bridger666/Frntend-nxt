@@ -33,7 +33,7 @@ export function HeroSection({ title, subtitle }: HeroSectionProps) {
           style={{ fontFamily: "'Doto', 'Courier New', monospace" }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-          <span className="text-[10px] tracking-[0.2em] text-white/80 uppercase font-light">
+          <span className="text-[10px] tracking-[0.2em] text-[#c4c9b8] uppercase font-manrope font-light">
             Aivory Suite | Architecture to Production
           </span>
         </div>
