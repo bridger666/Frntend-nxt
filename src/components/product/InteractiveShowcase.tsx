@@ -603,6 +603,46 @@ function IntroAnimation() {
   );
 }
 
+function BlueprintAnimation() {
+  return (
+    <div className="flex-1 flex flex-col justify-center items-center w-full h-full opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <div className="w-full bg-[#111111] border border-white/5 rounded-2xl p-8 relative shadow-lg">
+        <div className="text-[10px] text-white uppercase tracking-widest text-center font-light mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', fontFamily: "'Doto', 'Courier New', monospace" }}>
+          System Architecture Pipeline
+        </div>
+        
+        {/* Visual pipeline stages */}
+        <div className="flex justify-between items-center relative w-full px-4 mt-8 opacity-0 animate-fade-in" style={{ animationDelay: '1.2s' }}>
+          <div className="absolute top-[16px] left-[15%] right-[15%] h-[1px] bg-white/10 -z-10" />
+          <div className="absolute top-[16px] left-[15%] right-[15%] h-[2px] bg-[#aec99d] -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '1.8s' }} />
+          
+          {[
+            { name: 'Ingest', active: true, delay: '1.4s' },
+            { name: 'Process', active: true, delay: '2.0s' },
+            { name: 'Engine', active: true, delay: '2.6s', ping: true },
+            { name: 'Action', active: false, delay: '3.2s' },
+          ].map((node, i) => (
+            <div key={node.name} className="flex flex-col items-center gap-3 opacity-0 animate-fade-in-up relative" style={{ animationDelay: node.delay }}>
+              {node.ping && (
+                <>
+                  <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#aec99d] animate-ping opacity-60 z-20" />
+                  <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#aec99d] z-20" />
+                </>
+              )}
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs relative z-10 ${
+                node.active ? 'bg-[#aec99d] text-black font-medium shadow-[0_0_15px_rgba(174,201,157,0.3)]' : 'bg-[#111111] border border-white/10 text-white/40 font-medium'
+              }`} style={{ fontFamily: "'Manrope', sans-serif" }}>
+                0{i + 1}
+              </div>
+              <span className="text-[10px] text-white/60 font-medium">{node.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function InteractiveShowcase() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [alignedIndex, setAlignedIndex] = useState<number | null>(null);
@@ -734,12 +774,22 @@ export function InteractiveShowcase() {
                     </li>
                   ))}
                 </ul>
+
+                {/* Mobile Inline Visualizer */}
+                <div className="flex lg:hidden w-full aspect-[4/3] sm:aspect-[16/11] bg-[#181818] rounded-3xl mt-10 relative overflow-hidden border border-[#b2cca2]/40 shadow-[0_0_30px_rgba(178,204,162,0.08)]">
+                  <div className="absolute inset-0 p-4 md:p-6 flex flex-col">
+                    {idx === 0 && <div className="flex-1 relative w-full h-full"><DiagnosticAnimation /></div>}
+                    {idx === 1 && <BlueprintAnimation />}
+                    {idx === 2 && <div className="flex-1 w-full h-full relative"><RoadmapAnimation /></div>}
+                    {idx === 3 && <div className="flex-1 w-full h-full relative"><ConsoleAnimation /></div>}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
           {/* Right Column: Sticky Mockup Visualizer Area */}
-          <div className="lg:col-span-7 lg:sticky lg:top-[12vh] flex items-center justify-center z-20 mx-auto w-full max-w-[850px] aspect-[4/3] lg:aspect-[16/11]">
+          <div className="hidden lg:col-span-7 lg:sticky lg:top-[12vh] lg:flex items-center justify-center z-20 mx-auto w-full max-w-[850px] aspect-[4/3] lg:aspect-[16/11]">
             <div 
               ref={stickyBoxRef}
               className={`w-full h-full bg-[#181818] border transition-all duration-500 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden shadow-2xl ${
@@ -781,40 +831,8 @@ export function InteractiveShowcase() {
                     activeIndex === 1 ? 'opacity-100 pointer-events-auto z-10' : 'opacity-0 pointer-events-none'
                   }`}
                 >
-                  <div key={`blue-${activeIndex === 1 ? 'active' : 'inactive'}`} className="flex-1 flex flex-col justify-center items-center w-full h-full opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                    <div className="w-full bg-[#111111] border border-white/5 rounded-2xl p-8 relative shadow-lg">
-                      <div className="text-[10px] text-white uppercase tracking-widest text-center font-light mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s', fontFamily: "'Doto', 'Courier New', monospace" }}>
-                        System Architecture Pipeline
-                      </div>
-                      
-                      {/* Visual pipeline stages */}
-                      <div className="flex justify-between items-center relative w-full px-4 mt-8 opacity-0 animate-fade-in" style={{ animationDelay: '1.2s' }}>
-                        <div className="absolute top-[16px] left-[15%] right-[15%] h-[1px] bg-white/10 -z-10" />
-                        <div className="absolute top-[16px] left-[15%] right-[15%] h-[2px] bg-[#aec99d] -z-10 origin-left opacity-0 animate-scale-x" style={{ animationDelay: '1.8s' }} />
-                        
-                        {[
-                          { name: 'Ingest', active: true, delay: '1.4s' },
-                          { name: 'Process', active: true, delay: '2.0s' },
-                          { name: 'Engine', active: true, delay: '2.6s', ping: true },
-                          { name: 'Action', active: false, delay: '3.2s' },
-                        ].map((node, i) => (
-                          <div key={node.name} className="flex flex-col items-center gap-3 opacity-0 animate-fade-in-up relative" style={{ animationDelay: node.delay }}>
-                            {node.ping && (
-                              <>
-                                <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#aec99d] animate-ping opacity-60 z-20" />
-                                <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full bg-[#aec99d] z-20" />
-                              </>
-                            )}
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs relative z-10 ${
-                              node.active ? 'bg-[#aec99d] text-black font-medium shadow-[0_0_15px_rgba(174,201,157,0.3)]' : 'bg-[#111111] border border-white/10 text-white/40 font-medium'
-                            }`} style={{ fontFamily: "'Manrope', sans-serif" }}>
-                              0{i + 1}
-                            </div>
-                            <span className="text-[10px] text-white/60 font-medium">{node.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  <div key={`blue-${activeIndex === 1 ? 'active' : 'inactive'}`} className="flex-1 relative w-full h-full">
+                    {activeIndex === 1 && <BlueprintAnimation />}
                   </div>
                   <div className="text-[10px] text-white/30 text-center uppercase tracking-widest mt-6 pb-6 font-light">
                     * Schematic mapping how databases interface with automation layers.

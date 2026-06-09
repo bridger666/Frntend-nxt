@@ -48,7 +48,7 @@ function StatCounter({ stat, active, delay }: { stat: StatItem; active: boolean;
 
   return (
     <div
-      className="flex-1 min-w-0 md:min-w-[180px] text-center py-6 md:py-10 px-2 lg:px-4 transition-all duration-[800ms] ease-out"
+      className="flex-1 min-w-0 md:min-w-[180px] text-center py-6 md:py-10 px-0.5 sm:px-2 lg:px-4 transition-all duration-[800ms] ease-out"
       style={{
         opacity: active ? 1 : 0,
         transform: active ? 'translateY(0)' : 'translateY(30px)',
@@ -57,12 +57,12 @@ function StatCounter({ stat, active, delay }: { stat: StatItem; active: boolean;
     >
       <div
         className="font-light text-white leading-none mb-3"
-        style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(3rem, 6vw, 5rem)' }}
+        style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(1.4rem, 4vw, 5rem)' }}
       >
         {value}{stat.suffix}
       </div>
       <div
-        className="font-light text-[0.85rem] text-white/45 tracking-[0.08em] md:whitespace-nowrap"
+        className="font-light text-[8px] sm:text-[10px] md:text-[0.85rem] text-white/45 tracking-normal md:tracking-[0.08em] whitespace-nowrap"
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {stat.label}
@@ -109,7 +109,7 @@ export default function StatsSection() {
         {/* Stats Row */}
         <div
           ref={ref}
-          className="flex flex-wrap justify-center items-start relative md:flex-row flex-col"
+          className="flex flex-nowrap justify-center items-start relative flex-row"
         >
           {stats.map((stat, i) => (
             <div key={stat.label} className="contents">
