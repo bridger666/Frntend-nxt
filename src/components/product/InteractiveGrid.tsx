@@ -392,10 +392,20 @@ function IntegrationsMarquee() {
   const marqueeItems = [...logos, ...logos];
 
   return (
-    <div className="w-full mt-32 mb-10 overflow-hidden relative opacity-40 hover:opacity-100 transition-opacity duration-700">
-      {/* gradient masks for smooth edges */}
-      <div className="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+    <div className="w-full mt-32 mb-10">
+      <div className="text-center mb-12 px-6">
+        <h3 className="text-[22px] md:text-[32px] font-light text-[#c4c9b8] mb-3 tracking-tight" style={{ fontFamily: "'Manrope', sans-serif" }}>
+          Every Aivory agent speaks your customer&apos;s language. Literally.
+        </h3>
+        <p className="text-[15px] md:text-[17px] text-[#8a8f8e] font-light">
+          Multilingual by default. No configuration required.
+        </p>
+      </div>
+
+      <div className="w-full overflow-hidden relative opacity-40 hover:opacity-100 transition-opacity duration-700">
+        {/* gradient masks for smooth edges */}
+        <div className="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
       
       <div className="flex w-[200%] animate-marquee">
         {marqueeItems.map((item, idx) => (
@@ -406,6 +416,7 @@ function IntegrationsMarquee() {
             <span className="text-white/80 font-semibold text-xl tracking-tight" style={{ fontFamily: item.name === 'Zoom' ? 'sans-serif' : 'inherit' }}>{item.name}</span>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
