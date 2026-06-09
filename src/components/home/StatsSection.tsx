@@ -62,7 +62,7 @@ function StatCounter({ stat, active, delay }: { stat: StatItem; active: boolean;
         {value}{stat.suffix}
       </div>
       <div
-        className="font-light text-[0.85rem] text-white/45 tracking-[0.08em]"
+        className="font-light text-[0.85rem] text-white/45 tracking-[0.08em] md:whitespace-nowrap"
         style={{ fontFamily: "'Manrope', sans-serif" }}
       >
         {stat.label}
