@@ -782,6 +782,7 @@ export function InteractiveShowcase() {
                     {idx === 1 && <BlueprintAnimation />}
                     {idx === 2 && <div className="flex-1 w-full h-full relative"><RoadmapAnimation /></div>}
                     {idx === 3 && <div className="flex-1 w-full h-full relative"><ConsoleAnimation /></div>}
+                    {idx === 4 && <div className="w-full flex flex-col gap-4 h-full justify-center relative"><WorkflowAnimation /></div>}
                   </div>
                 </div>
               </div>
