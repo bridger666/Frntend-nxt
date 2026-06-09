@@ -58,7 +58,7 @@ export function TechLabSection() {
           <img 
             src="/Aivory-tech-lab-logo-2026.svg" 
             alt="Aivory Tech Lab Logo" 
-            className="w-48 md:w-64 lg:w-80 h-auto -mb-2 md:-mb-4 object-contain brightness-0 invert opacity-90"
+            className="w-32 md:w-48 lg:w-56 h-auto mb-2 md:mb-4 object-contain brightness-0 invert opacity-90"
           />
           <h2 className="text-4xl md:text-5xl font-light tracking-tight text-white leading-tight mb-4">
             Aivory Tech Lab
