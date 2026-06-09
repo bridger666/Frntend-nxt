@@ -104,7 +104,7 @@ export default function PricingStepOne({ currency }: { currency?: 'IDR' | 'USD' 
   // Helper to format exactly or fallback
   const getFormattedPrice = (basePrice: number) => {
     const activeCurrency = currency || (language === 'id' ? 'IDR' : 'USD');
-    if (activeCurrency === 'USD') return `${basePrice}`;
+    if (activeCurrency === 'USD') return `$${basePrice}`;
     
     // For IDR, use dynamic exchangeRate
     const idrValue = basePrice * exchangeRate;
