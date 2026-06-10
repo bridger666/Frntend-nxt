@@ -537,11 +537,11 @@ function IntroAnimation() {
         if (entry.isIntersecting && step === 0) {
           let timers: NodeJS.Timeout[] = [];
           timers.push(setTimeout(() => setStep(1), 300));
-          timers.push(setTimeout(() => setStep(2), 1000));
-          timers.push(setTimeout(() => setStep(3), 2500));
-          timers.push(setTimeout(() => setStep(4), 4500));
-          timers.push(setTimeout(() => setStep(5), 7000));
-          timers.push(setTimeout(() => setStep(6), 8500));
+          timers.push(setTimeout(() => setStep(2), 800));
+          timers.push(setTimeout(() => setStep(3), 1600));
+          timers.push(setTimeout(() => setStep(4), 2600));
+          timers.push(setTimeout(() => setStep(5), 3800));
+          timers.push(setTimeout(() => setStep(6), 4800));
         }
       },
       { threshold: 0.5 }
@@ -564,9 +564,7 @@ function IntroAnimation() {
     <div ref={containerRef} className="w-full h-full bg-[#151515] border border-white/5 rounded-3xl p-8 relative shadow-2xl flex flex-col justify-center items-center text-center">
       {/* Agent Label */}
       <div className={`transition-all duration-1000 ease-out absolute top-12 ${step >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-        <div className="text-[11px] text-[#c4c9b8] uppercase tracking-[0.25em] font-medium">
-          AIVORY AGENT
-        </div>
+        <img src="/Aivory logo 2026.svg" alt="Aivory Agent" className="h-6 w-auto opacity-80 mx-auto" />
       </div>
 
       {/* Rotating Lines Container */}
@@ -589,13 +587,13 @@ function IntroAnimation() {
 
         {/* Scroll indicator (replaces the text) */}
         <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ease-out ${step >= 6 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="text-[10px] text-[#c4c9b8] uppercase tracking-widest font-medium mb-3 mt-4">
+          <div className="text-[12px] text-[#c4c9b8] uppercase tracking-widest font-medium mb-3 mt-4">
             SCROLL TO EXPLORE
           </div>
-          <div className="flex flex-col items-center space-y-[-12px]">
-            <svg className="w-5 h-5 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <svg className="w-5 h-5 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0.2s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <svg className="w-5 h-5 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0.4s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <div className="flex flex-col items-center space-y-[-14px]">
+            <svg className="w-6 h-6 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg className="w-6 h-6 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0.2s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg className="w-6 h-6 text-[#c4c9b8] animate-pulse" style={{ animationDelay: '0.4s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </div>
         </div>
       </div>
