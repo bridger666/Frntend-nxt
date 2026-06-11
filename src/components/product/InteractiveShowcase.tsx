@@ -52,6 +52,7 @@ const showcaseProducts = [
 const QUESTIONS = [
   { q: 'Define your business goals', a: 'Scale operations without headcount growth.' },
   { q: 'Identify potential risks', a: 'Data privacy compliance, change management.' },
+  { q: 'Assess data infrastructure', a: 'Fragmented databases, manual reporting.' },
 ];
 const DIMS = [
   { label: 'Strategy', val: 80, delay: 0.2 },
@@ -74,15 +75,15 @@ function DiagnosticAnimation() {
     const run = () => {
       setPhase('qa'); setVisibleQ(0); setScoreVal(0); setBarsVisible(false);
       QUESTIONS.forEach((_, i) => t(() => setVisibleQ(i + 1), 0.6 + i * 1.5));
-      t(() => setPhase('thinking'), 3.6);
+      t(() => setPhase('thinking'), 5.1);
       t(() => {
         setPhase('score');
         let v = 0;
         const step = () => { v += 2; setScoreVal(v); if (v < 78) timerRefs.current.push(setTimeout(step, 20)); };
         step();
         timerRefs.current.push(setTimeout(() => setBarsVisible(true), 300));
-      }, 5.5);
-      t(run, 10.0);
+      }, 7.0);
+      t(run, 11.5);
     };
     run();
     return clearAll;
