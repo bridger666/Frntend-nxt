@@ -85,7 +85,7 @@ const cards: PricingCard[] = [
     description: 'Everything in one. Know, plan, execute in order.',
     features: ['• Deep Diagnostic', '• Blueprint', '• Roadmap'],
     cta: 'View Deployment Plans',
-    savings: 'Save $48',
+    savings: 'Save 13%',
   },
 ];
 

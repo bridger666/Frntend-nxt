@@ -108,7 +108,7 @@ export default function Footer() {
           <div className="pb-6 text-sm text-white/80">
             &copy; 2026 Aivory. All rights reserved.
           </div>
-          <div className="border-b border-white/20 w-full mb-8"></div>
+          {/* Divider removed */}
         </div>
       </div>
     </footer>

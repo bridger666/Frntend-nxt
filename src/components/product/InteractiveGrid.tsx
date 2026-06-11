@@ -296,7 +296,7 @@ function AppIntegrationsAnimation() {
 
 export function InteractiveGrid() {
   return (
-    <section className="bg-black text-white py-24 px-6 md:px-16 lg:px-24 border-b border-white/10 relative">
+    <section className="bg-black text-white py-24 px-6 md:px-16 lg:px-24 relative">
       {/* Background grid line overlay */}
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
